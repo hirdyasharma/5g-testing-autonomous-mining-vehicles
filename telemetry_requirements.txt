@@ -1,0 +1,15 @@
+# Physics Simulator — Requirements
+# COMP6016 — 5G Security Testing for Autonomous Mining Vehicles
+# Hirdya Sharma (21749180)
+#
+# Install: pip install -r requirements.txt
+# Tested on: Python 3.11 (inside Docker python:3.11-slim)
+
+# HTTP client — sends POST /telemetry to MEC Edge API
+requests==2.31.0
+
+# Prometheus metrics exposure on port 8000
+prometheus_client==0.20.0
+
+# Note: All other imports (time, math, random, json, csv, os, argparse,
+# datetime) are Python standard library — no install needed.

@@ -1,0 +1,15 @@
+# MEC Edge API — Requirements
+# COMP6016 — 5G Security Testing for Autonomous Mining Vehicles
+# Hirdya Sharma (21749180)
+#
+# Install: pip install -r requirements.txt
+# Tested on: Python 3.11 (inside Docker python:3.11-slim)
+
+# Web framework
+flask==3.0.0
+
+# Prometheus metrics exposure
+prometheus_client==0.20.0
+
+# Note: All other imports (time, json, math, logging, collections,
+# datetime) are Python standard library — no install needed.

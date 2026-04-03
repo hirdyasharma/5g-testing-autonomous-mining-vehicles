@@ -1,0 +1,46 @@
+# Root Requirements — Dataset Generation + ML Model Integration
+# COMP6016 — 5G Security Testing for Autonomous Mining Vehicles
+# Group 1 | Curtin University | Semester 1, 2026
+#
+# Install: pip install -r requirements.txt --break-system-packages
+#
+# WHO NEEDS THIS:
+#   Hirdya Sharma   — dataset generation (generate_dataset_enhanced.py)
+#   Achani Bandara  — ML model training and evaluation
+#   Anyone          — uploading model to MEC API, running analysis
+#
+# NOTE: The physics simulator and MEC API have their OWN requirements.txt
+#   inside telemetry/ and mec/ respectively.
+#   This file is ONLY for scripts run outside Docker.
+#
+# NOTE: generate_dataset_enhanced.py and merge_datasets.py use ONLY
+#   Python standard library (math, random, csv, datetime, os, argparse).
+#   No pip install is needed to run those two scripts.
+
+# ── ML Model Training (Achani Bandara) ────────────────────────────────────────
+# Must match the version used to train — Achani trained on 1.6.1
+# If you get pickle errors loading model_quality.pkl, check your version:
+#   python3 -c "import sklearn; print(sklearn.__version__)"
+scikit-learn==1.6.1
+
+# Required by scikit-learn
+numpy>=1.24.0,<2.0.0
+
+# ── Data Analysis and Validation ──────────────────────────────────────────────
+# Used for dataset exploration, label distribution analysis, and plotting
+pandas>=2.0.0
+
+# ── Model Upload to MEC API ────────────────────────────────────────────────────
+# Used when uploading model_quality.pkl to the live MEC Edge API
+requests==2.31.0
+
+# ── Optional: Visualisation ───────────────────────────────────────────────────
+# Used for plotting feature importance, confusion matrices, ROC curves
+# Uncomment if needed:
+# matplotlib>=3.7.0
+# seaborn>=0.12.0
+
+# ── Optional: SHAP Explainability (Week 9 task) ───────────────────────────────
+# Used for SHAP feature importance tooltips in Grafana
+# Uncomment when implementing Week 9 explainability task:
+# shap>=0.43.0
