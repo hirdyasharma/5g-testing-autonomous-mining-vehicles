@@ -43,7 +43,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Get the actual user (not root)
-ACTUAL_USER="${SUDO_USER:-$(logname 2>/dev/null || echo $USER)}"
+ACTUAL_USER="${SUDO_USER:-${LOGNAME:-$(whoami)}}"
 HOME_DIR=$(eval echo "~$ACTUAL_USER")
 log "Running as root, will configure for user: $ACTUAL_USER"
 
@@ -120,6 +120,9 @@ info "Step 5/7 — Locating project folder..."
 PROJECT_DIR=""
 for loc in \
   "$HOME_DIR/Downloads/mining5g" \
+  "$HOME_DIR/Downloads/mining5g_setup" \
+  "$HOME_DIR/Downloads/5g-testing-autonomous-mining-vehicles" \
+  "$HOME_DIR/5g-testing-autonomous-mining-vehicles" \
   "$HOME_DIR/Desktop/mining5g" \
   "$HOME_DIR/mining5g" \
   "/opt/mining5g" \
@@ -185,8 +188,8 @@ echo " Verifying key services"
 echo "============================================================"
 
 # Check MEC API
-if curl -s http://localhost:5000/health > /dev/null 2>&1; then
-  log "MEC Edge API: http://localhost:5000/health - UP"
+if curl -s http://localhost:5001/health > /dev/null 2>&1; then
+  log "MEC Edge API: http://localhost:5001/health - UP"
 else
   warn "MEC Edge API not responding yet - may need another 30 seconds"
 fi
@@ -220,7 +223,7 @@ echo ""
 echo "  Grafana Dashboard:  http://localhost:3000"
 echo "  Login:              admin / mining5g@secure"
 echo ""
-echo "  MEC Edge API:       http://localhost:5000/health"
+echo "  MEC Edge API:       http://localhost:5001/health"
 echo "  Prometheus:         http://localhost:9190"
 echo "  Physics Metrics:    http://localhost:8000/metrics"
 echo ""
