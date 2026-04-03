@@ -1,0 +1,153 @@
+# ============================================================
+# COMP6016 — 5G Security Testing for Autonomous Mining Vehicles
+# .gitignore
+# ============================================================
+
+# ── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+
+# ── Virtual environments ───────────────────────────────────────
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ── Jupyter ────────────────────────────────────────────────────
+.ipynb_checkpoints
+*.ipynb
+
+# ── ML Model files (large binaries — share via Google Drive) ──
+# Uncomment to exclude model files from git:
+# models/*.pkl
+# models/*.joblib
+# models/*.h5
+# models/*.pt
+# models/*.pth
+
+# ── Dataset files (large CSV — share separately) ──────────────
+data/*.csv
+data/*.json
+data/*.parquet
+!data/.gitkeep
+
+# ── Attack evidence (large pcap files) ────────────────────────
+evidence/pcaps/*.pcap
+evidence/pcaps/*.pcapng
+!evidence/pcaps/.gitkeep
+
+# ── Docker ────────────────────────────────────────────────────
+.docker/
+
+# ── Docker volumes and generated data ─────────────────────────
+prometheus_data/
+grafana_data/
+mongo_data/
+
+# ── Log files ─────────────────────────────────────────────────
+*.log
+logs/
+open5gs_logs/
+/opt/open5gs/var/log/
+
+# ── Open5GS generated files ───────────────────────────────────
+config/*.yaml.bak
+config/*.yaml.bad
+config/*.yaml.orig
+
+# ── Test reports (auto-generated — regenerate with test_everything.sh) ─
+full_stack_test_report.txt
+proof.txt
+
+# ── OS files ──────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE and editor files ──────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ── Environment variables ─────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Security — NEVER commit these ─────────────────────────────
+# Subscriber keys are already in config/ but are test-only (MCC=999)
+# If you use real PLMN credentials, add them here:
+# config/credentials/
+# *.pem
+# *.key
+# *.crt (except the test TLS certs already in config/tls/)
+
+# ── Temporary files ───────────────────────────────────────────
+*.tmp
+*.temp
+*.bak
+*.backup
+tmp/
+temp/
+
+# ── Compressed archives ───────────────────────────────────────
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# ── Node (if any JS tooling is added later) ───────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── What IS tracked (exceptions to above rules) ───────────────
+# Keep placeholder files in empty directories
+!data/.gitkeep
+!evidence/pcaps/.gitkeep
+!models/.gitkeep
+
+# Keep the test TLS certificates (these are test-only, not production)
+!config/tls/
+
+# Keep the MongoDB init script (no sensitive production data)
+!mongo-init/init-subscribers.js
+
+# Keep the Grafana dashboard JSON
+!monitoring/grafana/dashboards/*.json

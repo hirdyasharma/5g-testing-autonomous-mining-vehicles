@@ -1,0 +1,10 @@
+db_uri: mongodb://10.0.0.2/open5gs
+
+udr:
+  sbi:
+    server:
+      - address: 10.0.0.13
+        port: 7777
+    client:
+      nrf:
+        - uri: http://10.0.0.10:7777

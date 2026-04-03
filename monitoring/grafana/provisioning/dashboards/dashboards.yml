@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'Mining5G'
+    orgId: 1
+    folder: 'Mining Telemetry'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

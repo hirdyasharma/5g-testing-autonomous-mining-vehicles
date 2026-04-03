@@ -1,0 +1,309 @@
+networks:
+  5gnet:
+    external: true
+    name: mining5g_5gnet
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  mongo_data:
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongo
+    hostname: mongo
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.2
+        aliases:
+          - mongo
+          - mongodb
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+  open5gs-nrf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-nrf
+    command: open5gs-nrfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.10
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+
+  open5gs-ausf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-ausf
+    command: open5gs-ausfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.11
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-udm:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-udm
+    command: open5gs-udmd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.12
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-udr:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-udr
+    command: open5gs-udrd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.13
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+      - open5gs-nrf
+
+  open5gs-pcf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-pcf
+    command: open5gs-pcfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.14
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-nssf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-nssf
+    command: open5gs-nssfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.15
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-bsf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-bsf
+    command: open5gs-bsfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.16
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-amf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-amf
+    command: open5gs-amfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.20
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    ports:
+      - "38413:38412/sctp"
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+
+  open5gs-smf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-smf
+    command: open5gs-smfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.21
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    restart: unless-stopped
+    depends_on:
+      - open5gs-nrf
+      - open5gs-upf
+
+  open5gs-upf:
+    image: gradiant/open5gs:2.7.0
+    container_name: open5gs-upf
+    command: open5gs-upfd
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.22
+    volumes:
+      - ./config:/opt/open5gs/etc/open5gs
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    privileged: true
+    devices:
+      - /dev/net/tun
+    restart: unless-stopped
+
+  ueransim-gnb:
+    image: gradiant/ueransim:3.2.6
+    container_name: ueransim-gnb
+    entrypoint: ["nr-gnb", "-c", "/config/gnb.yaml"]
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.30
+    volumes:
+      - ./config:/config
+    depends_on:
+      - open5gs-amf
+    restart: unless-stopped
+
+  ueransim-ue1:
+    image: gradiant/ueransim:3.2.6
+    container_name: ueransim-ue1
+    entrypoint: ["nr-ue", "-c", "/config/ue1.yaml"]
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.31
+    volumes:
+      - ./config:/config
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    devices:
+      - /dev/net/tun
+    depends_on:
+      - ueransim-gnb
+    restart: unless-stopped
+
+  ueransim-ue2:
+    image: gradiant/ueransim:3.2.6
+    container_name: ueransim-ue2
+    entrypoint: ["nr-ue", "-c", "/config/ue2.yaml"]
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.32
+    volumes:
+      - ./config:/config
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    devices:
+      - /dev/net/tun
+    depends_on:
+      - ueransim-gnb
+    restart: unless-stopped
+
+  mec-edge:
+    image: python:3.11-slim
+    container_name: mec-edge
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.45
+    volumes:
+      - ./mec:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt -q && python mec_edge_api.py"
+    ports:
+      - "5001:5000"
+    restart: unless-stopped
+
+  telemetry-simulator:
+    image: python:3.11-slim
+    container_name: telemetry-simulator
+    ports:
+      - "8000:8000"
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.40
+    volumes:
+      - ./telemetry:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt -q && python physics_simulator_real.py"
+    restart: unless-stopped
+    depends_on:
+      - mec-edge
+
+  prometheus:
+    image: prom/prometheus:v2.50.0
+    container_name: prometheus
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.50
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9190:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: node-exporter
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.51
+    ports:
+      - "9110:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+    restart: unless-stopped
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: alertmanager
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.53
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.3.0
+    container_name: grafana
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.60
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=mining5g@secure
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/mining-telemetry.json
+    restart: unless-stopped
+    depends_on:
+      - prometheus

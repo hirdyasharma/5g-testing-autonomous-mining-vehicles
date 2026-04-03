@@ -1,0 +1,13 @@
+logger:
+  file: /opt/open5gs/var/log/open5gs/udm.log
+
+global:
+
+udm:
+  sbi:
+    server:
+      - address: 10.0.0.12
+        port: 7777
+    client:
+      nrf:
+        - uri: http://10.0.0.10:7777

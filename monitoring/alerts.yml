@@ -1,0 +1,62 @@
+groups:
+  - name: 5g_security_alerts
+    rules:
+      - alert: HighPacketLoss
+        expr: mining_vehicle_packet_loss_percent > 10
+        for: 1m
+        labels:
+          severity: warning
+          category: security
+        annotations:
+          summary: "High packet loss on vehicle {{ $labels.vehicle_id }}"
+          description: "Packet loss {{ $value }}% - possible jamming"
+
+      - alert: AuthenticationFailureSpike
+        expr: rate(open5gs_amf_auth_failures_total[5m]) > 5
+        for: 30s
+        labels:
+          severity: critical
+          category: security
+        annotations:
+          summary: "Authentication failure spike detected"
+          description: "{{ $value }} auth failures/sec - possible rogue device"
+
+      - alert: AbnormalDataRate
+        expr: rate(mining_vehicle_bytes_sent_total[5m]) > 1000000
+        for: 2m
+        labels:
+          severity: warning
+          category: security
+        annotations:
+          summary: "Abnormal data rate from {{ $labels.vehicle_id }}"
+          description: "{{ $value }} bytes/sec - possible data exfiltration"
+
+      - alert: HighLatency
+        expr: mining_vehicle_rtt_ms > 200
+        for: 1m
+        labels:
+          severity: warning
+          category: performance
+        annotations:
+          summary: "High latency for {{ $labels.vehicle_id }}"
+          description: "RTT {{ $value }}ms - possible MitM attack"
+
+      - alert: VehicleOffline
+        expr: up{job="mining-telemetry"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          category: availability
+        annotations:
+          summary: "Mining vehicle telemetry offline"
+          description: "Vehicle stopped sending telemetry"
+
+      - alert: LowSignalStrength
+        expr: mining_vehicle_rsrp_dbm < -110
+        for: 1m
+        labels:
+          severity: warning
+          category: network
+        annotations:
+          summary: "Low 5G signal for {{ $labels.vehicle_id }}"
+          description: "RSRP {{ $value }} dBm - vehicle may lose connectivity"
