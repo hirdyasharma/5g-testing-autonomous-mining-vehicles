@@ -1,2 +1,6 @@
 flask==3.0.0
 prometheus_client==0.20.0
+joblib
+pandas
+scikit-learn
+numpy

@@ -1,0 +1,192 @@
+{
+  "required_files": [
+    "train.csv",
+    "test.csv"
+  ],
+  "model_files": {
+    "scaler": "scaler.pkl",
+    "attack": "model_attack.pkl",
+    "protocol": "model_protocol.pkl",
+    "quality": "model_quality.pkl"
+  },
+  "feature_columns": [
+    "rtt_ms",
+    "packet_loss_percent",
+    "dl_mbps",
+    "ul_mbps",
+    "rsrp_dbm",
+    "sinr_db"
+  ],
+  "bounds": {
+    "speed_kmh": [0, 55],
+    "fuel_liters": [0, 3900],
+    "battery_percent": [0, 100],
+    "engine_temp_c": [40, 120],
+    "rsrp_dbm": [-125, -44],
+    "rtt_ms": [1, 2000],
+    "packet_loss_percent": [0, 100],
+    "payload_tons": [0, 186],
+    "sinr_db": [-10, 40],
+    "ul_mbps": [0, 1000],
+    "dl_mbps": [0, 1000]
+  },
+  "anomaly": {
+    "warmup_history_size": 3,
+    "warmup_score": 0.1,
+    "rtt_multiplier": 3,
+    "rtt_weight": 0.4,
+    "loss_multiplier": 5,
+    "loss_weight": 0.4,
+    "stopped_speed_threshold": 0,
+    "overheat_temperature_threshold": 100,
+    "overheat_weight": 0.3
+  },
+  "protocol_rules": [
+    {
+      "protocol": "udp",
+      "keywords": ["udp"]
+    },
+    {
+      "protocol": "tcp",
+      "keywords": ["syn", "tcp", "slowloris"]
+    },
+    {
+      "protocol": "icmp",
+      "keywords": ["icmp"]
+    }
+  ],
+  "quality_rules": {
+    "good": {
+      "packet_loss_percent_lt": 2,
+      "rtt_ms_lt": 50
+    },
+    "normal": {
+      "packet_loss_percent_lt": 8,
+      "rtt_ms_lt": 120
+    },
+    "fallback": "bad"
+  },
+  "quality_map": {
+    "good": 1,
+    "normal": 2,
+    "bad": 3
+  },
+  "protocol_map": {
+    "tcp": 1,
+    "udp": 2,
+    "icmp": 3
+  },
+  "attack_map": {
+    "normal": 0,
+    "icmp_flood": 1,
+    "syn_flood": 2,
+    "udp_flood": 3,
+    "network_degradation_attack": 4,
+    "slowloris_attack": 5
+  },
+  "training": {
+    "test_size": 0.3,
+    "random_state": 42,
+    "attack_model": {
+      "n_estimators": 100,
+      "max_depth": 10,
+      "random_state": 42
+    },
+    "protocol_model": {
+      "n_estimators": 50,
+      "max_depth": 5,
+      "random_state": 42
+    },
+    "quality_model": {
+      "n_estimators": 50,
+      "max_depth": 5,
+      "random_state": 42
+    }
+  },
+  "dataset_balance": {
+    "labels": [
+      "normal",
+      "icmp_flood",
+      "syn_flood",
+      "udp_flood",
+      "network_degradation_attack",
+      "slowloris_attack"
+    ],
+    "numeric_ranges": {
+      "speed_kmh": [0.0, 55.0],
+      "fuel_liters": [0.0, 3900.0],
+      "fuel_pct": [0.0, 100.0],
+      "battery_percent": [0.0, 100.0],
+      "engine_temp_c": [40.0, 120.0],
+      "payload_tons": [0.0, 186.0],
+      "grade_pct": [0.0, 20.0],
+      "latitude": [-90.0, 90.0],
+      "longitude": [-180.0, 180.0],
+      "rsrp_dbm": [-125.0, -44.0],
+      "sinr_db": [-10.0, 40.0],
+      "rtt_ms": [1.0, 2000.0],
+      "packet_loss_percent": [0.0, 100.0],
+      "ul_mbps": [0.0, 1000.0],
+      "dl_mbps": [0.0, 1000.0],
+      "ambient_temp_c": [-20.0, 60.0]
+    },
+    "int_columns": [
+      "handover",
+      "in_tunnel",
+      "waypoint_idx",
+      "broken",
+      "flat_tyre",
+      "overloaded",
+      "low_fuel_warning"
+    ],
+    "base_labels": {
+      "normal": "normal",
+      "icmp_flood": "icmp_flood",
+      "syn_flood": "syn_flood",
+      "udp_flood": "udp_flood",
+      "network_degradation_attack": "normal",
+      "slowloris_attack": "syn_flood"
+    },
+    "train_seed": 100,
+    "test_seed": 200,
+    "synthetic_profiles": {
+      "network_degradation_attack": {
+        "rtt_ms": {"mean": 220, "std": 55},
+        "packet_loss_percent": {"mean": 11, "std": 3.5},
+        "ul_mbps": {"mean": 4.0, "std": 1.2},
+        "dl_mbps": {"mean": 32.0, "std": 10.0},
+        "rsrp_dbm": {"mean": -80.0, "std": 5.0},
+        "sinr_db": {"mean": 9.5, "std": 3.5},
+        "int_fields": {
+          "handover": [0, 2],
+          "in_tunnel": [0, 2],
+          "overloaded": [0, 2]
+        }
+      },
+      "slowloris_attack": {
+        "rtt_ms": {"mean": 760, "std": 130},
+        "packet_loss_percent": {"mean": 4.5, "std": 2.0},
+        "ul_mbps": {"mean": 0.8, "std": 0.35},
+        "dl_mbps": {"mean": 18.0, "std": 6.0},
+        "rsrp_dbm": {"mean": -62.0, "std": 2.5},
+        "sinr_db": {"mean": 28.0, "std": 2.0},
+        "fixed_fields": {
+          "handover": 0,
+          "in_tunnel": 0
+        }
+      }
+    }
+  },
+  "api": {
+    "host": "0.0.0.0",
+    "port": 5000
+  },
+  "metric_retention": {
+    "core_vehicle_ids": [
+      "MV-001",
+      "MV-002",
+      "MV-003"
+    ],
+    "expire_after_seconds": 120
+  }
+}

@@ -1,211 +1,1520 @@
 {
   "title": "5G Mining Vehicle Telemetry & Security",
   "uid": "mining5g-dashboard",
-  "version": 1,
+  "version": 5,
   "schemaVersion": 38,
   "refresh": "5s",
-  "time": { "from": "now-30m", "to": "now" },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
   "timezone": "browser",
   "panels": [
     {
-      "id": 1, "title": "Active Vehicles", "type": "stat",
-      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "id": 1,
+      "title": "Active Vehicles",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "red", "value": 0 }, { "color": "green", "value": 1 }] } } },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
-      "targets": [{ "expr": "count(up{job='mining-telemetry'})", "legendFormat": "Online" }]
-    },
-    {
-      "id": 2, "title": "Security Alerts (5min)", "type": "stat",
-      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "orange", "value": 1 }, { "color": "red", "value": 5 }] } } },
-      "options": { "reduceOptions": { "calcs": ["sum"] }, "colorMode": "background" },
-      "targets": [{ "expr": "increase(mining_security_events_total[5m])", "legendFormat": "Events" }]
-    },
-    {
-      "id": 3, "title": "Avg RSRP Signal (dBm)", "type": "stat",
-      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "dBm", "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "red", "value": -120 }, { "color": "orange", "value": -105 }, { "color": "green", "value": -90 }] } } },
-      "options": { "reduceOptions": { "calcs": ["mean"] }, "colorMode": "background" },
-      "targets": [{ "expr": "avg(mining_vehicle_rsrp_dbm)", "legendFormat": "RSRP" }]
-    },
-    {
-      "id": 4, "title": "Auth Failures/sec", "type": "stat",
-      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "orange", "value": 1 }, { "color": "red", "value": 5 }] } } },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
-      "targets": [{ "expr": "rate(open5gs_amf_auth_failures_total[5m])", "legendFormat": "Auth Failures" }]
-    },
-    {
-      "id": 5, "title": "Avg Packet Loss %", "type": "stat",
-      "gridPos": { "x": 16, "y": 0, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "percent", "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "orange", "value": 5 }, { "color": "red", "value": 10 }] } } },
-      "options": { "reduceOptions": { "calcs": ["mean"] }, "colorMode": "background" },
-      "targets": [{ "expr": "avg(mining_vehicle_packet_loss_percent)", "legendFormat": "Packet Loss" }]
-    },
-    {
-      "id": 6, "title": "Avg RTT (ms)", "type": "stat",
-      "gridPos": { "x": 20, "y": 0, "w": 4, "h": 4 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "ms", "color": { "mode": "thresholds" },
-        "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "orange", "value": 50 }, { "color": "red", "value": 100 }] } } },
-      "options": { "reduceOptions": { "calcs": ["mean"] }, "colorMode": "background" },
-      "targets": [{ "expr": "avg(mining_vehicle_rtt_ms)", "legendFormat": "RTT" }]
-    },
-    {
-      "id": 10, "title": "5G Signal Strength per Vehicle (RSRP dBm)", "type": "timeseries",
-      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
-      "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "dBm", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "count(up{job='mining-telemetry'})",
+          "legendFormat": "Online"
+        }
       ]
     },
     {
-      "id": 11, "title": "Security Events Over Time", "type": "timeseries",
-      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "id": 2,
+      "title": "Security Alerts (5min)",
+      "type": "stat",
+      "gridPos": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 20 },
-        "color": { "fixedColor": "red", "mode": "fixed" } } },
-      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "rate(mining_security_events_total[1m]) * 60", "legendFormat": "Events/min ({{ vehicle_id }})" },
-        { "expr": "rate(open5gs_amf_auth_failures_total[1m]) * 60", "legendFormat": "Auth Failures/min" }
+        {
+          "expr": "increase(mining_security_events_total[5m])",
+          "legendFormat": "Events"
+        }
       ]
     },
     {
-      "id": 20, "title": "Vehicle Speed (km/h)", "type": "timeseries",
-      "gridPos": { "x": 0, "y": 12, "w": 8, "h": 7 },
+      "id": 3,
+      "title": "Avg RSRP Signal (dBm)",
+      "type": "stat",
+      "gridPos": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "velocitykmh", "custom": { "lineWidth": 2 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dBm",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": -120
+              },
+              {
+                "color": "orange",
+                "value": -105
+              },
+              {
+                "color": "green",
+                "value": -90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "avg(mining_vehicle_rsrp_dbm)",
+          "legendFormat": "RSRP"
+        }
       ]
     },
     {
-      "id": 21, "title": "Battery Level (%)", "type": "timeseries",
-      "gridPos": { "x": 8, "y": 12, "w": 8, "h": 7 },
+      "id": 4,
+      "title": "Auth Failures/sec",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "lineWidth": 2 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "mining_vehicle_battery_percent{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_battery_percent{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_battery_percent{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "rate(open5gs_amf_auth_failures_total[5m])",
+          "legendFormat": "Auth Failures"
+        }
       ]
     },
     {
-      "id": 22, "title": "Engine Temperature (C)", "type": "timeseries",
-      "gridPos": { "x": 16, "y": 12, "w": 8, "h": 7 },
+      "id": 5,
+      "title": "Avg Packet Loss %",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "celsius", "custom": { "lineWidth": 2 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "avg(mining_vehicle_packet_loss_percent)",
+          "legendFormat": "Packet Loss"
+        }
       ]
     },
     {
-      "id": 30, "title": "Uplink Throughput (Mbps)", "type": "timeseries",
-      "gridPos": { "x": 0, "y": 19, "w": 12, "h": 7 },
+      "id": 6,
+      "title": "Avg RTT (ms)",
+      "type": "stat",
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 15 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background"
+      },
       "targets": [
-        { "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-001'}", "legendFormat": "MV-001 UL" },
-        { "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-002'}", "legendFormat": "MV-002 UL" },
-        { "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-003'}", "legendFormat": "MV-003 UL" }
+        {
+          "expr": "avg(mining_vehicle_rtt_ms)",
+          "legendFormat": "RTT"
+        }
       ]
     },
     {
-      "id": 31, "title": "Downlink Throughput (Mbps)", "type": "timeseries",
-      "gridPos": { "x": 12, "y": 19, "w": 12, "h": 7 },
+      "id": 10,
+      "title": "5G Signal Strength per Vehicle (RSRP dBm)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 15 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dBm",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-001'}", "legendFormat": "MV-001 DL" },
-        { "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-002'}", "legendFormat": "MV-002 DL" },
-        { "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-003'}", "legendFormat": "MV-003 DL" }
+        {
+          "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_rsrp_dbm{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
       ]
     },
     {
-      "id": 40, "title": "Packet Loss % per Vehicle", "type": "timeseries",
-      "gridPos": { "x": 0, "y": 26, "w": 12, "h": 7 },
+      "id": 11,
+      "title": "Security Events Over Time",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 12,
+        "h": 8
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "custom": { "lineWidth": 2, "fillOpacity": 20 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20
+          },
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "rate(mining_security_events_total[1m]) * 60",
+          "legendFormat": "Events/min ({{ vehicle_id }})"
+        },
+        {
+          "expr": "rate(open5gs_amf_auth_failures_total[1m]) * 60",
+          "legendFormat": "Auth Failures/min"
+        }
       ]
     },
     {
-      "id": 41, "title": "Round Trip Time (ms)", "type": "timeseries",
-      "gridPos": { "x": 12, "y": 26, "w": 12, "h": 7 },
+      "id": 20,
+      "title": "Vehicle Speed (km/h)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "ms", "min": 0, "custom": { "lineWidth": 2 } } },
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "velocitykmh",
+          "custom": {
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_speed_kmh{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
       ]
     },
     {
-      "id": 50, "title": "SINR Signal Quality (dB)", "type": "gauge",
-      "gridPos": { "x": 0, "y": 33, "w": 8, "h": 7 },
+      "id": 21,
+      "title": "Battery Level (%)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "dB", "min": -20, "max": 40,
-        "thresholds": { "steps": [{ "color": "red", "value": -20 }, { "color": "orange", "value": 0 }, { "color": "green", "value": 15 }] } } },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "showThresholdMarkers": true },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_sinr_db{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_sinr_db{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_sinr_db{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "mining_vehicle_battery_percent{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_battery_percent{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_battery_percent{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
       ]
     },
     {
-      "id": 51, "title": "Fuel Level (L)", "type": "bargauge",
-      "gridPos": { "x": 8, "y": 33, "w": 8, "h": 7 },
+      "id": 22,
+      "title": "Engine Temperature (C)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "litre", "min": 0, "max": 200,
-        "thresholds": { "steps": [{ "color": "red", "value": 0 }, { "color": "orange", "value": 30 }, { "color": "green", "value": 80 }] } } },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "orientation": "horizontal", "displayMode": "gradient" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_engine_temp_c{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
       ]
     },
     {
-      "id": 52, "title": "Payload (tons)", "type": "bargauge",
-      "gridPos": { "x": 16, "y": 33, "w": 8, "h": 7 },
+      "id": 30,
+      "title": "Uplink Throughput (Mbps)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 19,
+        "w": 12,
+        "h": 7
+      },
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "min": 0, "max": 100,
-        "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "orange", "value": 80 }, { "color": "red", "value": 95 }] } } },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "orientation": "horizontal", "displayMode": "gradient" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
       "targets": [
-        { "expr": "mining_vehicle_payload_tons{vehicle_id='MV-001'}", "legendFormat": "MV-001" },
-        { "expr": "mining_vehicle_payload_tons{vehicle_id='MV-002'}", "legendFormat": "MV-002" },
-        { "expr": "mining_vehicle_payload_tons{vehicle_id='MV-003'}", "legendFormat": "MV-003" }
+        {
+          "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001 UL"
+        },
+        {
+          "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002 UL"
+        },
+        {
+          "expr": "mining_vehicle_throughput_ul_mbps{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003 UL"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "title": "Downlink Throughput (Mbps)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 19,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001 DL"
+        },
+        {
+          "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002 DL"
+        },
+        {
+          "expr": "mining_vehicle_throughput_dl_mbps{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003 DL"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "title": "Packet Loss % per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 26,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_packet_loss_percent{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "title": "Round Trip Time (ms)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 26,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_rtt_ms{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "title": "SINR Signal Quality (dB)",
+      "type": "gauge",
+      "gridPos": {
+        "x": 0,
+        "y": 33,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dB",
+          "min": -20,
+          "max": 40,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": -20
+              },
+              {
+                "color": "orange",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 15
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_sinr_db{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_sinr_db{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_sinr_db{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "title": "Fuel Level (L)",
+      "type": "bargauge",
+      "gridPos": {
+        "x": 8,
+        "y": 33,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "litre",
+          "min": 0,
+          "max": 200,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 30
+              },
+              {
+                "color": "green",
+                "value": 80
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_fuel_liters{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "title": "Payload (tons)",
+      "type": "bargauge",
+      "gridPos": {
+        "x": 16,
+        "y": 33,
+        "w": 8,
+        "h": 7
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 95
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_payload_tons{vehicle_id='MV-001'}",
+          "legendFormat": "MV-001"
+        },
+        {
+          "expr": "mining_vehicle_payload_tons{vehicle_id='MV-002'}",
+          "legendFormat": "MV-002"
+        },
+        {
+          "expr": "mining_vehicle_payload_tons{vehicle_id='MV-003'}",
+          "legendFormat": "MV-003"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "title": "Attack Predictions (5min)",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 40,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m]))",
+          "legendFormat": "Detections"
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "title": "Attack Type Detections",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 6,
+        "y": 40,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 18
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (attack_type) (increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m]))",
+          "legendFormat": "{{ attack_type }}"
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "title": "Predicted Attack per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 18,
+        "y": 40,
+        "w": 6,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "normal"
+                },
+                "1": {
+                  "text": "icmp_flood"
+                },
+                "2": {
+                  "text": "syn_flood"
+                },
+                "3": {
+                  "text": "udp_flood"
+                },
+                "4": {
+                  "text": "network_degradation_attack"
+                },
+                "5": {
+                  "text": "slowloris_attack"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mec_attack_prediction",
+          "legendFormat": "{{ vehicle_id }}"
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "title": "Traffic Quality Overview",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 46,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "good"
+                },
+                "2": {
+                  "text": "normal"
+                },
+                "3": {
+                  "text": "bad"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "avg(mec_traffic_quality)",
+          "legendFormat": "Quality"
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "title": "Traffic Quality per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 6,
+        "y": 46,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "good"
+                },
+                "2": {
+                  "text": "normal"
+                },
+                "3": {
+                  "text": "bad"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mec_traffic_quality",
+          "legendFormat": "{{ vehicle_id }}"
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "title": "Bad Traffic Vehicles",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 46,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "sum(mec_traffic_quality == bool 3)",
+          "legendFormat": "Bad"
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "title": "Protocol per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 52,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "tcp"
+                },
+                "2": {
+                  "text": "udp"
+                },
+                "3": {
+                  "text": "icmp"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mec_protocol_prediction",
+          "legendFormat": "{{ vehicle_id }}"
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "title": "Achani Flagged Vehicles",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 52,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "sum(mec_achani_flag)",
+          "legendFormat": "Flagged"
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "title": "Tamper Detections (5min)",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 52,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_tamper_detected_total[5m]))",
+          "legendFormat": "Tamper"
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "title": "Achani Flag per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 58,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "clear"
+                },
+                "1": {
+                  "text": "flagged"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mec_achani_flag",
+          "legendFormat": "{{ vehicle_id }}"
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "title": "Anomaly Score per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 58,
+        "w": 10,
+        "h": 6
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 16
+          },
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 0.8
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "expr": "mec_anomaly_score",
+          "legendFormat": "{{ vehicle_id }}"
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "title": "Rejected Telemetry % (5min)",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 58,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 15
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background"
+      },
+      "targets": [
+        {
+          "expr": "100 * sum(rate(mec_telemetry_rejected_total[5m])) / clamp_min(sum(rate(mec_telemetry_received_total[5m])), 0.0001)",
+          "legendFormat": "Rejected %"
+        }
       ]
     }
   ]
