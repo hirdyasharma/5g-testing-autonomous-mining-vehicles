@@ -277,6 +277,25 @@ services:
     restart: unless-stopped
     depends_on:
       - mec-edge
+      
+  scenario-simulator:
+    image: python:3.11-slim
+    container_name: scenario-simulator
+    working_dir: /app
+    volumes:
+      - ./telemetry:/app
+    command: >
+      sh -c "pip install flask prometheus_client requests &&
+             python scenario_controlled_simulator.py"
+    ports:
+      - "8010:8010"
+      - "8001:8001"
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.41
+    depends_on:
+      - mec-edge
+    restart: unless-stopped    
 
   prometheus:
     image: prom/prometheus:v2.50.0

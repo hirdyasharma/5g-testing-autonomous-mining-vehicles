@@ -34,3 +34,7 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+  
+  - job_name: "scenario-simulator"
+    static_configs:
+      - targets: ["10.0.0.41:8001"]
