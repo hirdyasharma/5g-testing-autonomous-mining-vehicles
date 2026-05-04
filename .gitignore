@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment/secrets
+.env
+*.key
+*.pem
+*.crt
+
+# Logs/evidence
+*.log
+evidence/**/*.pcap
+evidence/**/*.pcapng
+evidence/**/*.csv
+evidence/**/*.json
+evidence/**/*.txt
+!evidence/.gitkeep
+!evidence/README.md
+
+# Large/temporary outputs
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.tmp
+.DS_Store
+
+# Docker/local
+docker-data/
+grafana_data/
+prometheus_data/
+mongo_data/
