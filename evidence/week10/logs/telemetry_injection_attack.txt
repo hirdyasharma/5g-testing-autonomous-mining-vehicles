@@ -1,0 +1,1 @@
+{"status":"rejected","tamper_detected":true,"timestamp":"2026-05-03T17:28:57.044025+00:00","validation_error":"speed_kmh=999.0 outside [0,55]","vehicle_id":"MV-KALI-INJECTION"}

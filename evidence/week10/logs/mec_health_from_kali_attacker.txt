@@ -1,0 +1,1 @@
+{"attack_model_loaded":true,"feature_importance_enabled":true,"model_loaded":true,"protocol_model_loaded":true,"quality_model_loaded":true,"scaler_loaded":true,"status":"healthy","uptime_s":1026.4,"vehicles_seen":["MV-003","MV-001","MV-002"],"version":"COMP6016-v1.0"}

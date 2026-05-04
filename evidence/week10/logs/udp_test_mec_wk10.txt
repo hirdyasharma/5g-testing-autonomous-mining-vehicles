@@ -1,0 +1,38 @@
+=== UDP Traffic Test ===
+Target: 10.0.0.45
+Port: 5000
+Count: 30
+Purpose: Controlled lab-only UDP packet generation
+
+[1] udp_packet_sent
+[2] udp_packet_sent
+[3] udp_packet_sent
+[4] udp_packet_sent
+[5] udp_packet_sent
+[6] udp_packet_sent
+[7] udp_packet_sent
+[8] udp_packet_sent
+[9] udp_packet_sent
+[10] udp_packet_sent
+[11] udp_packet_sent
+[12] udp_packet_sent
+[13] udp_packet_sent
+[14] udp_packet_sent
+[15] udp_packet_sent
+[16] udp_packet_sent
+[17] udp_packet_sent
+[18] udp_packet_sent
+[19] udp_packet_sent
+[20] udp_packet_sent
+[21] udp_packet_sent
+[22] udp_packet_sent
+[23] udp_packet_sent
+[24] udp_packet_sent
+[25] udp_packet_sent
+[26] udp_packet_sent
+[27] udp_packet_sent
+[28] udp_packet_sent
+[29] udp_packet_sent
+[30] udp_packet_sent
+
+UDP test completed.

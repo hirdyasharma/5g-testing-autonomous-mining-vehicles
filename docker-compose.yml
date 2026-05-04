@@ -210,7 +210,44 @@ services:
     depends_on:
       - ueransim-gnb
     restart: unless-stopped
-
+  
+  ueransim-ue3:
+    image: gradiant/ueransim:3.2.6
+    container_name: ueransim-ue3
+    entrypoint: ["nr-ue", "-c", "/config/ue3.yaml"]
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.33
+    volumes:
+      - ./config:/config
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    devices:
+      - /dev/net/tun
+    depends_on:
+      - ueransim-gnb
+    restart: unless-stopped
+    
+  kali-attacker:
+    image: kalilinux/kali-rolling
+    container_name: kali-attacker
+    networks:
+      5gnet:
+        ipv4_address: 10.0.0.70
+    tty: true
+    stdin_open: true
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    command: >
+      sh -c "apt-get update &&
+             apt-get install -y iproute2 iputils-ping curl nmap hping3 tcpdump iperf3 netcat-openbsd procps &&
+             sleep infinity"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+    
   mec-edge:
     image: python:3.11-slim
     container_name: mec-edge

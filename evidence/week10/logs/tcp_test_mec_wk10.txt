@@ -1,0 +1,41 @@
+=== TCP Connection Test ===
+Target: 10.0.0.45
+Port: 5000
+Count: 30
+Delay: 0.10 seconds
+Purpose: Controlled lab-only TCP connection test against internal service
+
+[1] connect_ok
+[2] connect_ok
+[3] connect_ok
+[4] connect_ok
+[5] connect_ok
+[6] connect_ok
+[7] connect_ok
+[8] connect_ok
+[9] connect_ok
+[10] connect_ok
+[11] connect_ok
+[12] connect_ok
+[13] connect_ok
+[14] connect_ok
+[15] connect_ok
+[16] connect_ok
+[17] connect_ok
+[18] connect_ok
+[19] connect_ok
+[20] connect_ok
+[21] connect_ok
+[22] connect_ok
+[23] connect_ok
+[24] connect_ok
+[25] connect_ok
+[26] connect_ok
+[27] connect_ok
+[28] connect_ok
+[29] connect_ok
+[30] connect_ok
+
+TCP test completed.
+Successful connections: 30
+Failed connections: 0
