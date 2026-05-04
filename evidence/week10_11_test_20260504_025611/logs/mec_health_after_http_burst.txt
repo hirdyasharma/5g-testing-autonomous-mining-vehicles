@@ -1,0 +1,5 @@
+[RUN] curl -s http://localhost:5001/health
+COMMAND: curl -s http://localhost:5001/health
+TIMESTAMP: Mon May  4 04:29:56 AM UTC 2026
+----------------------------------------------------------
+{"attack_model_loaded":true,"feature_importance_enabled":true,"model_loaded":true,"protocol_model_loaded":true,"quality_model_loaded":true,"scaler_loaded":true,"status":"healthy","uptime_s":11754.3,"vehicles_seen":["MV-002","MV-003","MV-001"],"version":"COMP6016-v1.0"}

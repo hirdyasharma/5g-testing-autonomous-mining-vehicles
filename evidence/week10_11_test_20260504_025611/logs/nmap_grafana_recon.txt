@@ -1,0 +1,12 @@
+[RUN] docker exec kali-attacker nmap -sT -Pn 10.0.0.60
+COMMAND: docker exec kali-attacker nmap -sT -Pn 10.0.0.60
+TIMESTAMP: Mon May  4 02:56:38 AM UTC 2026
+----------------------------------------------------------
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-04 02:56 +0000
+Nmap scan report for grafana.mining5g_5gnet (10.0.0.60)
+Host is up (0.00014s latency).
+Not shown: 999 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+3000/tcp open  ppp
+
+Nmap done: 1 IP address (1 host up) scanned in 0.29 seconds

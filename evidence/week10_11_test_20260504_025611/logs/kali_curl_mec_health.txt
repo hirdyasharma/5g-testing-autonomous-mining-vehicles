@@ -1,0 +1,5 @@
+[RUN] docker exec kali-attacker curl -s http://10.0.0.45:5000/health
+COMMAND: docker exec kali-attacker curl -s http://10.0.0.45:5000/health
+TIMESTAMP: Mon May  4 02:56:31 AM UTC 2026
+----------------------------------------------------------
+{"attack_model_loaded":true,"feature_importance_enabled":true,"model_loaded":true,"protocol_model_loaded":true,"quality_model_loaded":true,"scaler_loaded":true,"status":"healthy","uptime_s":6151.3,"vehicles_seen":["MV-002","MV-003","MV-001"],"version":"COMP6016-v1.0"}

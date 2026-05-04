@@ -1,0 +1,124 @@
+[RUN] docker logs ueransim-ue1 --tail 120
+COMMAND: docker logs ueransim-ue1 --tail 120
+TIMESTAMP: Mon May  4 04:30:16 AM UTC 2026
+----------------------------------------------------------
+[2026-05-04 02:42:24.618] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:42:44.760] [rrc] [debug] Signal lost for cell[17], total [0] cells in coverage
+[2026-05-04 02:42:44.760] [rrc] [debug] New signal detected for cell[18], total [1] cells in coverage
+[2026-05-04 02:42:47.146] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [1] no SI, [0] reserved, [0] barred, ftai [0]
+[2026-05-04 02:42:47.146] [rrc] [warning] Acceptable cell selection failed in [1] cells. [1] no SI, [0] reserved, [0] barred, ftai [0]
+[2026-05-04 02:42:47.146] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:43:18.605] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:43:18.605] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:43:18.605] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:43:48.606] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:43:48.607] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:43:48.607] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:43:52.613] [rrc] [debug] Signal lost for cell[18], total [0] cells in coverage
+[2026-05-04 02:43:52.613] [nas] [error] PLMN selection failure, no cells in coverage
+[2026-05-04 02:43:52.615] [rrc] [debug] New signal detected for cell[19], total [1] cells in coverage
+[2026-05-04 02:43:54.727] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:44:20.120] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:44:20.120] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:44:20.120] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:44:52.590] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:44:52.591] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:44:52.591] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:45:04.651] [rrc] [debug] Signal lost for cell[19], total [0] cells in coverage
+[2026-05-04 02:45:04.651] [nas] [error] PLMN selection failure, no cells in coverage
+[2026-05-04 02:45:04.671] [rrc] [debug] New signal detected for cell[20], total [1] cells in coverage
+[2026-05-04 02:45:05.652] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:45:25.607] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:45:25.607] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:45:25.607] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:45:56.607] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:45:56.607] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:45:56.607] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:46:28.649] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:46:28.649] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:46:28.649] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:46:59.353] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:46:59.353] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:46:59.353] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:47:30.608] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:47:30.608] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:47:30.608] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:48:00.674] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:48:00.674] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:48:00.674] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:48:05.724] [rrc] [debug] Signal lost for cell[20], total [0] cells in coverage
+[2026-05-04 02:48:05.724] [nas] [error] PLMN selection failure, no cells in coverage
+[2026-05-04 02:48:05.727] [rrc] [debug] New signal detected for cell[21], total [1] cells in coverage
+[2026-05-04 02:48:08.626] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:48:23.680] [rrc] [debug] Signal lost for cell[21], total [0] cells in coverage
+[2026-05-04 02:48:23.690] [rrc] [debug] New signal detected for cell[22], total [1] cells in coverage
+[2026-05-04 02:48:28.653] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:48:31.193] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:48:31.193] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:48:31.193] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:49:01.624] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:49:01.624] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:49:01.624] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:49:32.613] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:49:32.613] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:49:32.613] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:49:32.618] [rrc] [debug] Signal lost for cell[22], total [0] cells in coverage
+[2026-05-04 02:49:32.623] [nas] [error] PLMN selection failure, no cells in coverage
+[2026-05-04 02:49:32.675] [rrc] [debug] New signal detected for cell[23], total [1] cells in coverage
+[2026-05-04 02:49:38.654] [nas] [info] Selected plmn[999/70]
+[2026-05-04 02:50:04.198] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:50:04.225] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:50:04.225] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:50:34.300] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:50:34.300] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:50:34.300] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:51:05.698] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:51:05.698] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:51:05.698] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:51:36.804] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:51:36.804] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:51:36.804] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:52:07.437] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:52:07.437] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:52:07.437] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:52:38.158] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:52:38.179] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:52:38.179] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:53:09.207] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:53:09.207] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:53:09.207] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:53:39.738] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:53:39.738] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:53:39.738] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:54:10.713] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:54:10.713] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:54:10.713] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:54:41.064] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:54:41.064] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:54:41.064] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:55:11.486] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:55:11.486] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:55:11.486] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:55:41.699] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:55:41.700] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:55:41.700] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:56:12.233] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:56:12.233] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:56:12.233] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 02:56:43.361] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:56:43.361] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 02:56:43.361] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 04:29:55.392] [rrc] [debug] Signal lost for cell[23], total [0] cells in coverage
+[2026-05-04 04:29:55.392] [nas] [error] PLMN selection failure, no cells in coverage
+[2026-05-04 04:29:55.393] [rrc] [warning] Acceptable cell selection failed, no cell is in coverage
+[2026-05-04 04:29:55.393] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 04:29:55.393] [rrc] [debug] New signal detected for cell[24], total [1] cells in coverage
+[2026-05-04 04:29:55.544] [nas] [info] Selected plmn[999/70]
+UERANSIM v3.2.6
+[2026-05-04 04:30:08.402] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
+[2026-05-04 04:30:08.422] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
+[2026-05-04 04:30:08.424] [nas] [info] Selected plmn[999/70]
+[2026-05-04 04:30:08.426] [rrc] [warning] Suitable cell selection failed in [1] cells. [0] out of PLMN, [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 04:30:08.426] [rrc] [warning] Acceptable cell selection failed in [1] cells. [0] no SI, [0] reserved, [1] barred, ftai [0]
+[2026-05-04 04:30:08.426] [rrc] [error] Cell selection failure, no suitable or acceptable cell found
+[2026-05-04 04:30:14.228] [nas] [info] UE switches to state [MM-DEREGISTERED/NO-CELL-AVAILABLE]

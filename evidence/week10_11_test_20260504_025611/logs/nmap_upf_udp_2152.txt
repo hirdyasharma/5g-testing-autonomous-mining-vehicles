@@ -1,0 +1,13 @@
+[RUN] docker exec kali-attacker nmap -sU -Pn -p 2152 10.0.0.22
+COMMAND: docker exec kali-attacker nmap -sU -Pn -p 2152 10.0.0.22
+TIMESTAMP: Mon May  4 02:56:39 AM UTC 2026
+----------------------------------------------------------
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-04 02:56 +0000
+Nmap scan report for open5gs-upf.mining5g_5gnet (10.0.0.22)
+Host is up (0.00026s latency).
+
+PORT     STATE SERVICE
+2152/udp open  gtp-user
+MAC Address: A2:42:3A:0B:0C:7A (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.35 seconds

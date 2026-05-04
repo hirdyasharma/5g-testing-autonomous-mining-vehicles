@@ -1,0 +1,12 @@
+[RUN] docker exec kali-attacker nmap -sT -Pn 10.0.0.45
+COMMAND: docker exec kali-attacker nmap -sT -Pn 10.0.0.45
+TIMESTAMP: Mon May  4 02:56:35 AM UTC 2026
+----------------------------------------------------------
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-04 02:56 +0000
+Nmap scan report for mec-edge.mining5g_5gnet (10.0.0.45)
+Host is up (0.00021s latency).
+Not shown: 999 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+5000/tcp open  upnp
+
+Nmap done: 1 IP address (1 host up) scanned in 0.16 seconds

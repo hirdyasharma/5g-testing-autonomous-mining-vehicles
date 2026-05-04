@@ -1,0 +1,37 @@
+[RUN] curl -s http://localhost:5001/metrics | grep -E 'mec_tamper_detected_total|mec_telemetry_rejected_total|mec_attack_predictions_total|mec_anomaly_score|mec_traffic_quality|mec_protocol_prediction|mec_replay_detected_total' || true
+COMMAND: curl -s http://localhost:5001/metrics | grep -E 'mec_tamper_detected_total|mec_telemetry_rejected_total|mec_attack_predictions_total|mec_anomaly_score|mec_traffic_quality|mec_protocol_prediction|mec_replay_detected_total' || true
+TIMESTAMP: Mon May  4 04:30:19 AM UTC 2026
+----------------------------------------------------------
+# HELP mec_anomaly_score Anomaly score
+# TYPE mec_anomaly_score gauge
+mec_anomaly_score{vehicle_id="MV-001"} 0.0
+mec_anomaly_score{vehicle_id="MV-002"} 0.0
+mec_anomaly_score{vehicle_id="MV-003"} 0.0
+mec_anomaly_score{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_protocol_prediction Protocol prediction (tcp=1, udp=2, icmp=3)
+# TYPE mec_protocol_prediction gauge
+mec_protocol_prediction{vehicle_id="MV-001"} 1.0
+mec_protocol_prediction{vehicle_id="MV-002"} 1.0
+mec_protocol_prediction{vehicle_id="MV-003"} 1.0
+mec_protocol_prediction{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_traffic_quality Traffic quality (good=1, normal=2, bad=3)
+# TYPE mec_traffic_quality gauge
+mec_traffic_quality{vehicle_id="MV-001"} 1.0
+mec_traffic_quality{vehicle_id="MV-002"} 1.0
+mec_traffic_quality{vehicle_id="MV-003"} 1.0
+mec_traffic_quality{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_attack_predictions_total Attack predictions by label
+# TYPE mec_attack_predictions_total counter
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-001"} 1220.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-002"} 1201.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-003"} 1219.0
+mec_attack_predictions_total{attack_type="network_degradation_attack",vehicle_id="MV-003"} 1.0
+mec_attack_predictions_total{attack_type="network_degradation_attack",vehicle_id="MV-KALI-REPLAY"} 5.0
+# HELP mec_tamper_detected_total Tamper detections
+# TYPE mec_tamper_detected_total counter
+mec_tamper_detected_total{vehicle_id="MV-002"} 19.0
+mec_tamper_detected_total{vehicle_id="MV-KALI-INJECTION"} 1.0
+# HELP mec_telemetry_rejected_total Telemetry rejected
+# TYPE mec_telemetry_rejected_total counter
+mec_telemetry_rejected_total{vehicle_id="MV-002"} 19.0
+mec_telemetry_rejected_total{vehicle_id="MV-KALI-INJECTION"} 1.0

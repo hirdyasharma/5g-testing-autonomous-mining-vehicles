@@ -1,0 +1,9 @@
+[RUN] docker network ls
+COMMAND: docker network ls
+TIMESTAMP: Mon May  4 02:56:13 AM UTC 2026
+----------------------------------------------------------
+NETWORK ID     NAME             DRIVER    SCOPE
+2a53bdd69ee2   bridge           bridge    local
+945bba93f160   host             host      local
+c70a3c73c2c8   mining5g_5gnet   bridge    local
+fde7ae95e29d   none             null      local

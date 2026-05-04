@@ -1,0 +1,158 @@
+[RUN] curl -s http://localhost:9190/api/v1/targets | python3 -m json.tool
+COMMAND: curl -s http://localhost:9190/api/v1/targets | python3 -m json.tool
+TIMESTAMP: Mon May  4 02:56:34 AM UTC 2026
+----------------------------------------------------------
+{
+    "status": "success",
+    "data": {
+        "activeTargets": [
+            {
+                "discoveredLabels": {
+                    "__address__": "10.0.0.45:5000",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "mec-edge"
+                },
+                "labels": {
+                    "instance": "10.0.0.45:5000",
+                    "job": "mec-edge"
+                },
+                "scrapePool": "mec-edge",
+                "scrapeUrl": "http://10.0.0.45:5000/metrics",
+                "globalUrl": "http://10.0.0.45:5000/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:33.633083424Z",
+                "lastScrapeDuration": 0.007261209,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "10.0.0.40:8000",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "mining-telemetry"
+                },
+                "labels": {
+                    "instance": "10.0.0.40:8000",
+                    "job": "mining-telemetry"
+                },
+                "scrapePool": "mining-telemetry",
+                "scrapeUrl": "http://10.0.0.40:8000/metrics",
+                "globalUrl": "http://10.0.0.40:8000/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:30.705582437Z",
+                "lastScrapeDuration": 0.043321697,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "10.0.0.51:9100",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "node-exporter"
+                },
+                "labels": {
+                    "instance": "10.0.0.51:9100",
+                    "job": "node-exporter"
+                },
+                "scrapePool": "node-exporter",
+                "scrapeUrl": "http://10.0.0.51:9100/metrics",
+                "globalUrl": "http://10.0.0.51:9100/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:30.038706122Z",
+                "lastScrapeDuration": 0.050583312,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "10.0.0.20:9090",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "open5gs-amf"
+                },
+                "labels": {
+                    "instance": "10.0.0.20:9090",
+                    "job": "open5gs-amf"
+                },
+                "scrapePool": "open5gs-amf",
+                "scrapeUrl": "http://10.0.0.20:9090/metrics",
+                "globalUrl": "http://10.0.0.20:9090/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:30.123771231Z",
+                "lastScrapeDuration": 0.001969049,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "10.0.0.22:9090",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "open5gs-upf"
+                },
+                "labels": {
+                    "instance": "10.0.0.22:9090",
+                    "job": "open5gs-upf"
+                },
+                "scrapePool": "open5gs-upf",
+                "scrapeUrl": "http://10.0.0.22:9090/metrics",
+                "globalUrl": "http://10.0.0.22:9090/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:33.356070898Z",
+                "lastScrapeDuration": 0.01400924,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "localhost:9090",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "5s",
+                    "__scrape_timeout__": "5s",
+                    "job": "prometheus"
+                },
+                "labels": {
+                    "instance": "localhost:9090",
+                    "job": "prometheus"
+                },
+                "scrapePool": "prometheus",
+                "scrapeUrl": "http://localhost:9090/metrics",
+                "globalUrl": "http://e06ed83ee0ed:9090/metrics",
+                "lastError": "",
+                "lastScrape": "2026-05-04T02:56:34.440638096Z",
+                "lastScrapeDuration": 0.004985048,
+                "health": "up",
+                "scrapeInterval": "5s",
+                "scrapeTimeout": "5s"
+            }
+        ],
+        "droppedTargets": [],
+        "droppedTargetCounts": {
+            "mec-edge": 0,
+            "mining-telemetry": 0,
+            "node-exporter": 0,
+            "open5gs-amf": 0,
+            "open5gs-upf": 0,
+            "prometheus": 0
+        }
+    }
+}

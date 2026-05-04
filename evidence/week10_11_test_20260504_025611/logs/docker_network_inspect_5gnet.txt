@@ -1,0 +1,205 @@
+[RUN] docker network inspect mining5g_5gnet
+COMMAND: docker network inspect mining5g_5gnet
+TIMESTAMP: Mon May  4 02:56:13 AM UTC 2026
+----------------------------------------------------------
+[
+    {
+        "Name": "mining5g_5gnet",
+        "Id": "c70a3c73c2c82b35a22cd6d523e12daf451a0cae07165fbad754f9342b1046d2",
+        "Created": "2026-03-26T05:11:58.287055639Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "10.0.0.0/24",
+                    "Gateway": "10.0.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {},
+        "Labels": {
+            "com.docker.compose.config-hash": "87b840f40f7213bd3c949d15b345fbccd65c58c9afd147063b635b12e3d2ef05",
+            "com.docker.compose.network": "5gnet",
+            "com.docker.compose.project": "mining5g",
+            "com.docker.compose.version": "5.1.1"
+        },
+        "Containers": {
+            "03c5c7edee0445a8d6936d5601f05c96eed25e7992d23d3a7e12feefad0fce2c": {
+                "Name": "mec-edge",
+                "EndpointID": "300e9ef1c147a1fcc14015df204a2fe9c2dd28bfe465a27af52f558b62e6dbf1",
+                "MacAddress": "be:e9:a0:74:d3:53",
+                "IPv4Address": "10.0.0.45/24",
+                "IPv6Address": ""
+            },
+            "0f8a518748369c9d2ece2a53e63a8c8ad89aa43b2b77cf19c3bb68614d6e6188": {
+                "Name": "ueransim-ue2",
+                "EndpointID": "966a041709af7015e944bfb95b1333119ae16f9930d78bd7a951953d28f063ca",
+                "MacAddress": "e6:30:68:31:50:b0",
+                "IPv4Address": "10.0.0.32/24",
+                "IPv6Address": ""
+            },
+            "29c3b1176cabbe88a4ca343765db152174d0bde7b3f8e91aaea965a32b0ce556": {
+                "Name": "open5gs-pcf",
+                "EndpointID": "7f2ea588dd2da3adb31525f1ff8a8618feb5aab6510c66a85fb388c6b469cef6",
+                "MacAddress": "a6:94:40:8b:89:52",
+                "IPv4Address": "10.0.0.14/24",
+                "IPv6Address": ""
+            },
+            "2ce1303b4d6f9fcf6c813a4ef04cb79dd26402bf1e9af8c20edf1215709c572e": {
+                "Name": "ueransim-ue1",
+                "EndpointID": "008f2087b1e6d8c19c4d76dd87b41dda1df58f9efde69db0de5df33d8f8d46a3",
+                "MacAddress": "ce:dd:1c:1b:6e:b8",
+                "IPv4Address": "10.0.0.31/24",
+                "IPv6Address": ""
+            },
+            "4fee5845fb0bfb62c2b84a86bff82ddc7a2d81a10b66baf14ca1a04e61b7c24d": {
+                "Name": "ueransim-ue3",
+                "EndpointID": "3e85a33161e59784978ff59878dc5853969d81d61f7f5acc54ebbbfedf9f3104",
+                "MacAddress": "36:4e:76:7a:5e:62",
+                "IPv4Address": "10.0.0.33/24",
+                "IPv6Address": ""
+            },
+            "523bb9eeb8b1c9d114fe7c06b9083e9a60e071cee1749f86d74b6dead29a92c1": {
+                "Name": "open5gs-ausf",
+                "EndpointID": "1905421c007eb098b8134c80c8422ff3c0dc95132f3af01e62eaf6928add574e",
+                "MacAddress": "fa:90:27:84:a5:e4",
+                "IPv4Address": "10.0.0.11/24",
+                "IPv6Address": ""
+            },
+            "601c0e6edfe8b67fbac6ea03657588832479f2a17cd17bca33dbd9e4d70da53c": {
+                "Name": "open5gs-smf",
+                "EndpointID": "7505eb302bac6ae28764819614df9c2c3a79a115c70747bd6df76ad274cb4d5e",
+                "MacAddress": "be:f7:d0:73:80:68",
+                "IPv4Address": "10.0.0.21/24",
+                "IPv6Address": ""
+            },
+            "68dbff47af7ef8841e6cc51c874c929c1de1095581c074a5836dcdfa8ef05389": {
+                "Name": "kali-attacker",
+                "EndpointID": "6518d1d2d83f6e3477efcf433f609498ddfc63dffdcb37e75ce4205fbc8a8071",
+                "MacAddress": "2e:c9:b4:57:9a:f9",
+                "IPv4Address": "10.0.0.70/24",
+                "IPv6Address": ""
+            },
+            "6f037dfc0c2f50b2e627fd95ea78e0d40006f63f67b672550d8cfda8cb40b968": {
+                "Name": "open5gs-nssf",
+                "EndpointID": "04fe22779030e004f75c96c4ca280949ebde2e354613793f797b038b22805d00",
+                "MacAddress": "06:bc:75:64:53:ea",
+                "IPv4Address": "10.0.0.15/24",
+                "IPv6Address": ""
+            },
+            "8e35d768369ca79f3ddc1ba40529b65572ca98e22042ca1b299f0645b05007fe": {
+                "Name": "open5gs-nrf",
+                "EndpointID": "7a52ea81ae69df968e407aad6794ed56d1112026422096f53a45fc0b8477a79d",
+                "MacAddress": "a6:ba:89:a8:e4:90",
+                "IPv4Address": "10.0.0.10/24",
+                "IPv6Address": ""
+            },
+            "906f61bd9c1648611fa76a020d7100bee4bfcbbcac6e329f2517b33ea3e98aac": {
+                "Name": "telemetry-simulator",
+                "EndpointID": "a85b822ffba13a0a10dc3137da68bf578469d1a7dcb497db9481f9102aa2aa64",
+                "MacAddress": "be:d7:6b:25:e9:ef",
+                "IPv4Address": "10.0.0.40/24",
+                "IPv6Address": ""
+            },
+            "9ee7d4681090603991347214a9a5ddb416a243016c7f552e19b56a25eebb8867": {
+                "Name": "open5gs-udm",
+                "EndpointID": "782dfa2d2b38061a188707a2f0b470e362e4ef6950613dd750b9f105f6bc9747",
+                "MacAddress": "9a:ad:df:c5:4f:bd",
+                "IPv4Address": "10.0.0.12/24",
+                "IPv6Address": ""
+            },
+            "b889a45ef20d663e75a5bf5d262242fff173ba31862b1e40a7f63891c33acf2a": {
+                "Name": "node-exporter",
+                "EndpointID": "5f07813287d220f2056f920d682fa85cf677b4acd2dce08c22ae6ff82494680f",
+                "MacAddress": "82:0b:be:9f:2e:ce",
+                "IPv4Address": "10.0.0.51/24",
+                "IPv6Address": ""
+            },
+            "b8aace8ed8b49951eb9d79fbc0004320b8acb76c1c08e3a0e02022d7f48932bf": {
+                "Name": "open5gs-amf",
+                "EndpointID": "c2d9e944bdb9c578590947bd5b2211767cc92a442fefce15e6372693e687a66f",
+                "MacAddress": "f6:96:e4:fe:42:dd",
+                "IPv4Address": "10.0.0.20/24",
+                "IPv6Address": ""
+            },
+            "c8a5e81b9437879875c57c91a8320e6f9998b4ad406cd360901cb94102a74273": {
+                "Name": "ueransim-gnb",
+                "EndpointID": "5b27d7c8782a3e2e557145edf9541d998925ecbeaf3b574ad29d9ded90a6935f",
+                "MacAddress": "ea:f4:9f:81:1e:73",
+                "IPv4Address": "10.0.0.30/24",
+                "IPv6Address": ""
+            },
+            "cee3fa6baafdca007d4d3c8547d96d648403b4180523f98cb34442b7f39393dd": {
+                "Name": "open5gs-bsf",
+                "EndpointID": "19b4d5453bb41068d09cf7e9434e824436236b513e7ab0043263ef06688b0e2b",
+                "MacAddress": "9a:6c:94:33:a1:b3",
+                "IPv4Address": "10.0.0.16/24",
+                "IPv6Address": ""
+            },
+            "d168c1d796b72a515eb1202d8a8fa7a54ee145ab4d4ad838976682b50bab554c": {
+                "Name": "grafana",
+                "EndpointID": "99c659e14ee8550ada558527b57c70beda3a4ce3423946cf0d99a41e29338044",
+                "MacAddress": "ca:03:15:23:62:62",
+                "IPv4Address": "10.0.0.60/24",
+                "IPv6Address": ""
+            },
+            "e06ed83ee0ed278eab3da780a732b1782b181c0f130b3958785fc3d1b1808d64": {
+                "Name": "prometheus",
+                "EndpointID": "ff7e37cea36ff9bd56311276c44662d00394daa56761e26216c429a4eb011255",
+                "MacAddress": "3e:57:01:ee:00:95",
+                "IPv4Address": "10.0.0.50/24",
+                "IPv6Address": ""
+            },
+            "e1f8e44ace2361d3e4b1557bfabfd3d8b072bc92817011ef0fe5f1f160c24126": {
+                "Name": "open5gs-upf",
+                "EndpointID": "a2c86c5feec8f6ddebecc2e9c732e544c466343b4da2989f6ebb528dd6bd1893",
+                "MacAddress": "a2:42:3a:0b:0c:7a",
+                "IPv4Address": "10.0.0.22/24",
+                "IPv6Address": ""
+            },
+            "f2bcf3bbf42cea8954b601e424f12828c207bd44127a883e1ade6e6e6b464db1": {
+                "Name": "mongo",
+                "EndpointID": "04b19cee1bba46caf36655a717ac8789e7138268a8bfd653145488eb8c5c93da",
+                "MacAddress": "6a:98:a0:79:c8:7a",
+                "IPv4Address": "10.0.0.2/24",
+                "IPv6Address": ""
+            },
+            "f8d23262b8ad7fb64f7194c3343fb0211134121eddc79987775015905d3c51f3": {
+                "Name": "open5gs-udr",
+                "EndpointID": "eac711e2b32404157de09c144798359156df85532a0f3ae99f2f68a834a0be4c",
+                "MacAddress": "b2:75:1a:ec:b1:f5",
+                "IPv4Address": "10.0.0.13/24",
+                "IPv6Address": ""
+            },
+            "fb1ba08635bb71c4993218dd96300d9d823d9d3e4b35c6d56f750f86bf1b5c02": {
+                "Name": "alertmanager",
+                "EndpointID": "e3ed46e15c517618225e8ce0325597198f6cdfdbfbce1b6d7889e472ee371e28",
+                "MacAddress": "de:0d:eb:34:c4:5d",
+                "IPv4Address": "10.0.0.53/24",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "10.0.0.0/24": {
+                        "IPsInUse": 25,
+                        "DynamicIPsAvailable": 231
+                    }
+                }
+            }
+        }
+    }
+]

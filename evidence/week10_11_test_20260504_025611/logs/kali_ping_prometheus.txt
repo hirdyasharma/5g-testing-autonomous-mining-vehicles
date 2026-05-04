@@ -1,0 +1,13 @@
+[RUN] docker exec kali-attacker ping -c 4 10.0.0.50
+COMMAND: docker exec kali-attacker ping -c 4 10.0.0.50
+TIMESTAMP: Mon May  4 02:56:28 AM UTC 2026
+----------------------------------------------------------
+PING 10.0.0.50 (10.0.0.50) 56(84) bytes of data.
+64 bytes from 10.0.0.50: icmp_seq=1 ttl=64 time=0.034 ms
+64 bytes from 10.0.0.50: icmp_seq=2 ttl=64 time=0.021 ms
+64 bytes from 10.0.0.50: icmp_seq=3 ttl=64 time=1.26 ms
+64 bytes from 10.0.0.50: icmp_seq=4 ttl=64 time=0.026 ms
+
+--- 10.0.0.50 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3142ms
+rtt min/avg/max/mdev = 0.021/0.334/1.255/0.531 ms

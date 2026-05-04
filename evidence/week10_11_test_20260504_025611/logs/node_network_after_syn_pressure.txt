@@ -1,0 +1,19 @@
+[RUN] curl -s 'http://localhost:9190/api/v1/query?query=sum(rate(node_network_receive_bytes_total%7Bdevice!%3D%22lo%22%7D%5B30s%5D))' | python3 -m json.tool
+COMMAND: curl -s 'http://localhost:9190/api/v1/query?query=sum(rate(node_network_receive_bytes_total%7Bdevice!%3D%22lo%22%7D%5B30s%5D))' | python3 -m json.tool
+TIMESTAMP: Mon May  4 02:56:48 AM UTC 2026
+----------------------------------------------------------
+{
+    "status": "success",
+    "data": {
+        "resultType": "vector",
+        "result": [
+            {
+                "metric": {},
+                "value": [
+                    1777863408.776,
+                    "128.01514114283412"
+                ]
+            }
+        ]
+    }
+}

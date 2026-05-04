@@ -1,0 +1,27 @@
+[RUN] docker compose ps
+COMMAND: docker compose ps
+TIMESTAMP: Mon May  4 02:56:11 AM UTC 2026
+----------------------------------------------------------
+NAME                  IMAGE                       COMMAND                  SERVICE               CREATED        STATUS       PORTS
+alertmanager          prom/alertmanager:v0.27.0   "/bin/alertmanager -…"   alertmanager          13 days ago    Up 2 hours   0.0.0.0:9093->9093/tcp, [::]:9093->9093/tcp
+grafana               grafana/grafana:10.3.0      "/run.sh"                grafana               13 days ago    Up 2 hours   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+kali-attacker         kalilinux/kali-rolling      "sh -c 'apt-get upda…"   kali-attacker         10 hours ago   Up 2 hours   
+mec-edge              python:3.11-slim            "sh -c 'pip install …"   mec-edge              13 days ago    Up 2 hours   0.0.0.0:5001->5000/tcp, [::]:5001->5000/tcp
+mongo                 mongo:6.0                   "docker-entrypoint.s…"   mongodb               13 days ago    Up 2 hours   27017/tcp
+node-exporter         prom/node-exporter:v1.7.0   "/bin/node_exporter …"   node-exporter         13 days ago    Up 2 hours   0.0.0.0:9110->9100/tcp, [::]:9110->9100/tcp
+open5gs-amf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-amf           13 days ago    Up 2 hours   0.0.0.0:38413->38412/sctp, [::]:38413->38412/sctp
+open5gs-ausf          gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-ausf          13 days ago    Up 2 hours   
+open5gs-bsf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-bsf           13 days ago    Up 2 hours   
+open5gs-nrf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-nrf           13 days ago    Up 2 hours   
+open5gs-nssf          gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-nssf          13 days ago    Up 2 hours   
+open5gs-pcf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-pcf           13 days ago    Up 2 hours   
+open5gs-smf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-smf           13 days ago    Up 2 hours   
+open5gs-udm           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-udm           13 days ago    Up 2 hours   
+open5gs-udr           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-udr           13 days ago    Up 2 hours   
+open5gs-upf           gradiant/open5gs:2.7.0      "/entrypoint.sh open…"   open5gs-upf           13 days ago    Up 2 hours   
+prometheus            prom/prometheus:v2.50.0     "/bin/prometheus --c…"   prometheus            13 days ago    Up 2 hours   0.0.0.0:9190->9090/tcp, [::]:9190->9090/tcp
+telemetry-simulator   python:3.11-slim            "sh -c 'pip install …"   telemetry-simulator   13 days ago    Up 2 hours   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+ueransim-gnb          gradiant/ueransim:3.2.6     "nr-gnb -c /config/g…"   ueransim-gnb          13 days ago    Up 2 hours   
+ueransim-ue1          gradiant/ueransim:3.2.6     "nr-ue -c /config/ue…"   ueransim-ue1          13 days ago    Up 2 hours   
+ueransim-ue2          gradiant/ueransim:3.2.6     "nr-ue -c /config/ue…"   ueransim-ue2          13 days ago    Up 2 hours   
+ueransim-ue3          gradiant/ueransim:3.2.6     "nr-ue -c /config/ue…"   ueransim-ue3          13 days ago    Up 2 hours   

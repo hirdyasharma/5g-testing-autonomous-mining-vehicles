@@ -1,0 +1,147 @@
+[RUN] curl -s http://localhost:8000/metrics
+COMMAND: curl -s http://localhost:8000/metrics
+TIMESTAMP: Mon May  4 04:30:19 AM UTC 2026
+----------------------------------------------------------
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 624.0
+python_gc_objects_collected_total{generation="1"} 46.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 66.0
+python_gc_collections_total{generation="1"} 6.0
+python_gc_collections_total{generation="2"} 0.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="11",patchlevel="15",version="3.11.15"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.93564672e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.5677824e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.77785723266e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 22.89
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 6.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1024.0
+# HELP mining_vehicle_speed_kmh Speed km/h
+# TYPE mining_vehicle_speed_kmh gauge
+mining_vehicle_speed_kmh{vehicle_id="MV-001"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-002"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-003"} 0.0
+# HELP mining_vehicle_battery_percent Battery %
+# TYPE mining_vehicle_battery_percent gauge
+mining_vehicle_battery_percent{vehicle_id="MV-001"} 87.7
+mining_vehicle_battery_percent{vehicle_id="MV-002"} 82.5
+mining_vehicle_battery_percent{vehicle_id="MV-003"} 90.2
+# HELP mining_vehicle_fuel_liters Fuel liters
+# TYPE mining_vehicle_fuel_liters gauge
+mining_vehicle_fuel_liters{vehicle_id="MV-001"} 681.1
+mining_vehicle_fuel_liters{vehicle_id="MV-002"} 554.1
+mining_vehicle_fuel_liters{vehicle_id="MV-003"} 713.2
+# HELP mining_vehicle_engine_temp_c Engine temp
+# TYPE mining_vehicle_engine_temp_c gauge
+mining_vehicle_engine_temp_c{vehicle_id="MV-001"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-002"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-003"} 55.0
+# HELP mining_vehicle_rsrp_dbm RSRP dBm
+# TYPE mining_vehicle_rsrp_dbm gauge
+mining_vehicle_rsrp_dbm{vehicle_id="MV-001"} -60.8
+mining_vehicle_rsrp_dbm{vehicle_id="MV-002"} -63.8
+mining_vehicle_rsrp_dbm{vehicle_id="MV-003"} -65.3
+# HELP mining_vehicle_sinr_db SINR dB
+# TYPE mining_vehicle_sinr_db gauge
+mining_vehicle_sinr_db{vehicle_id="MV-001"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-002"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-003"} 29.1
+# HELP mining_vehicle_rtt_ms RTT ms
+# TYPE mining_vehicle_rtt_ms gauge
+mining_vehicle_rtt_ms{vehicle_id="MV-001"} 16.2
+mining_vehicle_rtt_ms{vehicle_id="MV-002"} 21.1
+mining_vehicle_rtt_ms{vehicle_id="MV-003"} 18.3
+# HELP mining_vehicle_packet_loss_percent Packet loss %
+# TYPE mining_vehicle_packet_loss_percent gauge
+mining_vehicle_packet_loss_percent{vehicle_id="MV-001"} 0.31
+mining_vehicle_packet_loss_percent{vehicle_id="MV-002"} 0.33
+mining_vehicle_packet_loss_percent{vehicle_id="MV-003"} 0.36
+# HELP mining_vehicle_throughput_ul_mbps UL Mbps
+# TYPE mining_vehicle_throughput_ul_mbps gauge
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-001"} 15.8
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-002"} 19.7
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-003"} 8.4
+# HELP mining_vehicle_throughput_dl_mbps DL Mbps
+# TYPE mining_vehicle_throughput_dl_mbps gauge
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-001"} 155.7
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-002"} 49.3
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-003"} 58.9
+# HELP mining_vehicle_payload_tons Payload tons
+# TYPE mining_vehicle_payload_tons gauge
+mining_vehicle_payload_tons{vehicle_id="MV-001"} 90.6
+mining_vehicle_payload_tons{vehicle_id="MV-002"} 157.6
+mining_vehicle_payload_tons{vehicle_id="MV-003"} 110.3
+# HELP mining_vehicle_latitude Latitude
+# TYPE mining_vehicle_latitude gauge
+mining_vehicle_latitude{vehicle_id="MV-001"} -25.663096
+mining_vehicle_latitude{vehicle_id="MV-002"} -25.663349
+mining_vehicle_latitude{vehicle_id="MV-003"} -25.663129
+# HELP mining_vehicle_longitude Longitude
+# TYPE mining_vehicle_longitude gauge
+mining_vehicle_longitude{vehicle_id="MV-001"} 27.246804
+mining_vehicle_longitude{vehicle_id="MV-002"} 27.246551
+mining_vehicle_longitude{vehicle_id="MV-003"} 27.246771
+# HELP mining_security_events_total Security events
+# TYPE mining_security_events_total counter
+mining_security_events_total{event_type="anomaly",vehicle_id="MV-001"} 34.0
+mining_security_events_total{event_type="handover",vehicle_id="MV-001"} 9.0
+mining_security_events_total{event_type="anomaly",vehicle_id="MV-002"} 34.0
+mining_security_events_total{event_type="handover",vehicle_id="MV-002"} 13.0
+mining_security_events_total{event_type="anomaly",vehicle_id="MV-003"} 34.0
+mining_security_events_total{event_type="handover",vehicle_id="MV-003"} 11.0
+# HELP mining_security_events_created Security events
+# TYPE mining_security_events_created gauge
+mining_security_events_created{event_type="anomaly",vehicle_id="MV-001"} 1.7778572348344939e+09
+mining_security_events_created{event_type="handover",vehicle_id="MV-001"} 1.7778572348345022e+09
+mining_security_events_created{event_type="anomaly",vehicle_id="MV-002"} 1.7778572348346949e+09
+mining_security_events_created{event_type="handover",vehicle_id="MV-002"} 1.7778572348347023e+09
+mining_security_events_created{event_type="anomaly",vehicle_id="MV-003"} 1.7778572348348494e+09
+mining_security_events_created{event_type="handover",vehicle_id="MV-003"} 1.7778572348348565e+09
+# HELP open5gs_amf_auth_failures_total Auth failures
+# TYPE open5gs_amf_auth_failures_total counter
+open5gs_amf_auth_failures_total 0.0
+# HELP open5gs_amf_auth_failures_created Auth failures
+# TYPE open5gs_amf_auth_failures_created gauge
+open5gs_amf_auth_failures_created 1.7778572347969186e+09
+# HELP mining_vehicle_bytes_sent_total Bytes sent
+# TYPE mining_vehicle_bytes_sent_total counter
+mining_vehicle_bytes_sent_total{vehicle_id="MV-001"} 1.729155e+06
+mining_vehicle_bytes_sent_total{vehicle_id="MV-002"} 1.738391e+06
+mining_vehicle_bytes_sent_total{vehicle_id="MV-003"} 1.742977e+06
+# HELP mining_vehicle_bytes_sent_created Bytes sent
+# TYPE mining_vehicle_bytes_sent_created gauge
+mining_vehicle_bytes_sent_created{vehicle_id="MV-001"} 1.7778572348344615e+09
+mining_vehicle_bytes_sent_created{vehicle_id="MV-002"} 1.7778572348346734e+09
+mining_vehicle_bytes_sent_created{vehicle_id="MV-003"} 1.7778572348348305e+09
+# HELP mining_vehicle_bytes_received_total Bytes recv
+# TYPE mining_vehicle_bytes_received_total counter
+mining_vehicle_bytes_received_total{vehicle_id="MV-001"} 6.154825e+06
+mining_vehicle_bytes_received_total{vehicle_id="MV-002"} 6.140456e+06
+mining_vehicle_bytes_received_total{vehicle_id="MV-003"} 6.151046e+06
+# HELP mining_vehicle_bytes_received_created Bytes recv
+# TYPE mining_vehicle_bytes_received_created gauge
+mining_vehicle_bytes_received_created{vehicle_id="MV-001"} 1.7778572348344803e+09
+mining_vehicle_bytes_received_created{vehicle_id="MV-002"} 1.777857234834684e+09
+mining_vehicle_bytes_received_created{vehicle_id="MV-003"} 1.7778572348348403e+09

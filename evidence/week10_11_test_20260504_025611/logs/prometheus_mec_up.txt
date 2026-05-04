@@ -1,0 +1,23 @@
+[RUN] curl -s 'http://localhost:9190/api/v1/query?query=up%7Bjob%3D%22mec-edge%22%7D' | python3 -m json.tool
+COMMAND: curl -s 'http://localhost:9190/api/v1/query?query=up%7Bjob%3D%22mec-edge%22%7D' | python3 -m json.tool
+TIMESTAMP: Mon May  4 02:56:34 AM UTC 2026
+----------------------------------------------------------
+{
+    "status": "success",
+    "data": {
+        "resultType": "vector",
+        "result": [
+            {
+                "metric": {
+                    "__name__": "up",
+                    "instance": "10.0.0.45:5000",
+                    "job": "mec-edge"
+                },
+                "value": [
+                    1777863394.904,
+                    "1"
+                ]
+            }
+        ]
+    }
+}

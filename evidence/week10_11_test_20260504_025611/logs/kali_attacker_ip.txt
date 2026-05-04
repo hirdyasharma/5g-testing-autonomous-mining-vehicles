@@ -1,0 +1,5 @@
+[RUN] docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kali-attacker
+COMMAND: docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kali-attacker
+TIMESTAMP: Mon May  4 02:56:18 AM UTC 2026
+----------------------------------------------------------
+10.0.0.70

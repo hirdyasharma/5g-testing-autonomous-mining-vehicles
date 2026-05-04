@@ -1,0 +1,84 @@
+[RUN] docker exec kali-attacker curl -s http://10.0.0.40:8000/metrics | head -80
+COMMAND: docker exec kali-attacker curl -s http://10.0.0.40:8000/metrics | head -80
+TIMESTAMP: Mon May  4 02:56:33 AM UTC 2026
+----------------------------------------------------------
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 624.0
+python_gc_objects_collected_total{generation="1"} 46.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 66.0
+python_gc_collections_total{generation="1"} 6.0
+python_gc_collections_total{generation="2"} 0.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="11",patchlevel="15",version="3.11.15"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.93564672e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.541568e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.77785723266e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 22.66
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 6.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1024.0
+# HELP mining_vehicle_speed_kmh Speed km/h
+# TYPE mining_vehicle_speed_kmh gauge
+mining_vehicle_speed_kmh{vehicle_id="MV-001"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-002"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-003"} 0.0
+# HELP mining_vehicle_battery_percent Battery %
+# TYPE mining_vehicle_battery_percent gauge
+mining_vehicle_battery_percent{vehicle_id="MV-001"} 87.8
+mining_vehicle_battery_percent{vehicle_id="MV-002"} 82.6
+mining_vehicle_battery_percent{vehicle_id="MV-003"} 90.2
+# HELP mining_vehicle_fuel_liters Fuel liters
+# TYPE mining_vehicle_fuel_liters gauge
+mining_vehicle_fuel_liters{vehicle_id="MV-001"} 681.3
+mining_vehicle_fuel_liters{vehicle_id="MV-002"} 554.3
+mining_vehicle_fuel_liters{vehicle_id="MV-003"} 713.4
+# HELP mining_vehicle_engine_temp_c Engine temp
+# TYPE mining_vehicle_engine_temp_c gauge
+mining_vehicle_engine_temp_c{vehicle_id="MV-001"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-002"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-003"} 55.0
+# HELP mining_vehicle_rsrp_dbm RSRP dBm
+# TYPE mining_vehicle_rsrp_dbm gauge
+mining_vehicle_rsrp_dbm{vehicle_id="MV-001"} -62.7
+mining_vehicle_rsrp_dbm{vehicle_id="MV-002"} -60.0
+mining_vehicle_rsrp_dbm{vehicle_id="MV-003"} -60.0
+# HELP mining_vehicle_sinr_db SINR dB
+# TYPE mining_vehicle_sinr_db gauge
+mining_vehicle_sinr_db{vehicle_id="MV-001"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-002"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-003"} 30.0
+# HELP mining_vehicle_rtt_ms RTT ms
+# TYPE mining_vehicle_rtt_ms gauge
+mining_vehicle_rtt_ms{vehicle_id="MV-001"} 16.9
+mining_vehicle_rtt_ms{vehicle_id="MV-002"} 15.9
+mining_vehicle_rtt_ms{vehicle_id="MV-003"} 17.8
+# HELP mining_vehicle_packet_loss_percent Packet loss %
+# TYPE mining_vehicle_packet_loss_percent gauge
+mining_vehicle_packet_loss_percent{vehicle_id="MV-001"} 0.46
+mining_vehicle_packet_loss_percent{vehicle_id="MV-002"} 0.34
+mining_vehicle_packet_loss_percent{vehicle_id="MV-003"} 0.47
+# HELP mining_vehicle_throughput_ul_mbps UL Mbps
+# TYPE mining_vehicle_throughput_ul_mbps gauge
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-001"} 12.1
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-002"} 18.4

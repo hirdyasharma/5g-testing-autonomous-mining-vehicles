@@ -1,0 +1,59 @@
+[RUN] curl -s http://localhost:8000/metrics | grep -E 'speed|rtt|packet|rsrp|sinr|throughput|battery|payload|fuel|engine' || true
+COMMAND: curl -s http://localhost:8000/metrics | grep -E 'speed|rtt|packet|rsrp|sinr|throughput|battery|payload|fuel|engine' || true
+TIMESTAMP: Mon May  4 02:56:35 AM UTC 2026
+----------------------------------------------------------
+# HELP mining_vehicle_speed_kmh Speed km/h
+# TYPE mining_vehicle_speed_kmh gauge
+mining_vehicle_speed_kmh{vehicle_id="MV-001"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-002"} 0.0
+mining_vehicle_speed_kmh{vehicle_id="MV-003"} 0.0
+# HELP mining_vehicle_battery_percent Battery %
+# TYPE mining_vehicle_battery_percent gauge
+mining_vehicle_battery_percent{vehicle_id="MV-001"} 87.8
+mining_vehicle_battery_percent{vehicle_id="MV-002"} 82.6
+mining_vehicle_battery_percent{vehicle_id="MV-003"} 90.2
+# HELP mining_vehicle_fuel_liters Fuel liters
+# TYPE mining_vehicle_fuel_liters gauge
+mining_vehicle_fuel_liters{vehicle_id="MV-001"} 681.3
+mining_vehicle_fuel_liters{vehicle_id="MV-002"} 554.3
+mining_vehicle_fuel_liters{vehicle_id="MV-003"} 713.4
+# HELP mining_vehicle_engine_temp_c Engine temp
+# TYPE mining_vehicle_engine_temp_c gauge
+mining_vehicle_engine_temp_c{vehicle_id="MV-001"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-002"} 55.0
+mining_vehicle_engine_temp_c{vehicle_id="MV-003"} 55.0
+# HELP mining_vehicle_rsrp_dbm RSRP dBm
+# TYPE mining_vehicle_rsrp_dbm gauge
+mining_vehicle_rsrp_dbm{vehicle_id="MV-001"} -62.7
+mining_vehicle_rsrp_dbm{vehicle_id="MV-002"} -60.0
+mining_vehicle_rsrp_dbm{vehicle_id="MV-003"} -60.0
+# HELP mining_vehicle_sinr_db SINR dB
+# TYPE mining_vehicle_sinr_db gauge
+mining_vehicle_sinr_db{vehicle_id="MV-001"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-002"} 30.0
+mining_vehicle_sinr_db{vehicle_id="MV-003"} 30.0
+# HELP mining_vehicle_rtt_ms RTT ms
+# TYPE mining_vehicle_rtt_ms gauge
+mining_vehicle_rtt_ms{vehicle_id="MV-001"} 16.9
+mining_vehicle_rtt_ms{vehicle_id="MV-002"} 15.9
+mining_vehicle_rtt_ms{vehicle_id="MV-003"} 17.8
+# HELP mining_vehicle_packet_loss_percent Packet loss %
+# TYPE mining_vehicle_packet_loss_percent gauge
+mining_vehicle_packet_loss_percent{vehicle_id="MV-001"} 0.46
+mining_vehicle_packet_loss_percent{vehicle_id="MV-002"} 0.34
+mining_vehicle_packet_loss_percent{vehicle_id="MV-003"} 0.47
+# HELP mining_vehicle_throughput_ul_mbps UL Mbps
+# TYPE mining_vehicle_throughput_ul_mbps gauge
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-001"} 12.1
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-002"} 18.4
+mining_vehicle_throughput_ul_mbps{vehicle_id="MV-003"} 12.7
+# HELP mining_vehicle_throughput_dl_mbps DL Mbps
+# TYPE mining_vehicle_throughput_dl_mbps gauge
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-001"} 153.7
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-002"} 67.1
+mining_vehicle_throughput_dl_mbps{vehicle_id="MV-003"} 46.3
+# HELP mining_vehicle_payload_tons Payload tons
+# TYPE mining_vehicle_payload_tons gauge
+mining_vehicle_payload_tons{vehicle_id="MV-001"} 90.6
+mining_vehicle_payload_tons{vehicle_id="MV-002"} 157.6
+mining_vehicle_payload_tons{vehicle_id="MV-003"} 110.3

@@ -1,0 +1,3 @@
+hping in flood mode, no replies will be shown
+[send_ip] sendto: Operation not permitted
+HPING 10.0.0.45 (eth0 10.0.0.45): S set, 40 headers + 0 data bytes

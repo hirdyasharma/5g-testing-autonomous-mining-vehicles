@@ -1,0 +1,176 @@
+[RUN] curl -s http://localhost:5001/metrics
+COMMAND: curl -s http://localhost:5001/metrics
+TIMESTAMP: Mon May  4 04:30:19 AM UTC 2026
+----------------------------------------------------------
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 790786.0
+python_gc_objects_collected_total{generation="1"} 90093.0
+python_gc_objects_collected_total{generation="2"} 647.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 1553.0
+python_gc_collections_total{generation="1"} 141.0
+python_gc_collections_total{generation="2"} 3.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="11",patchlevel="15",version="3.11.15"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.40572672e+09
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 1.25108224e+08
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.77785723358e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 352.40000000000003
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 6.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1024.0
+# HELP mec_anomaly_score Anomaly score
+# TYPE mec_anomaly_score gauge
+mec_anomaly_score{vehicle_id="MV-001"} 0.0
+mec_anomaly_score{vehicle_id="MV-002"} 0.0
+mec_anomaly_score{vehicle_id="MV-003"} 0.0
+mec_anomaly_score{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_processing_time_ms Processing time ms
+# TYPE mec_processing_time_ms gauge
+mec_processing_time_ms{vehicle_id="MV-001"} 0.12
+mec_processing_time_ms{vehicle_id="MV-002"} 0.11
+mec_processing_time_ms{vehicle_id="MV-003"} 0.12
+mec_processing_time_ms{vehicle_id="MV-KALI-REPLAY"} 0.4
+# HELP mec_protocol_prediction Protocol prediction (tcp=1, udp=2, icmp=3)
+# TYPE mec_protocol_prediction gauge
+mec_protocol_prediction{vehicle_id="MV-001"} 1.0
+mec_protocol_prediction{vehicle_id="MV-002"} 1.0
+mec_protocol_prediction{vehicle_id="MV-003"} 1.0
+mec_protocol_prediction{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_traffic_quality Traffic quality (good=1, normal=2, bad=3)
+# TYPE mec_traffic_quality gauge
+mec_traffic_quality{vehicle_id="MV-001"} 1.0
+mec_traffic_quality{vehicle_id="MV-002"} 1.0
+mec_traffic_quality{vehicle_id="MV-003"} 1.0
+mec_traffic_quality{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_achani_flag Achani anomaly flag
+# TYPE mec_achani_flag gauge
+mec_achani_flag{vehicle_id="MV-001"} 0.0
+mec_achani_flag{vehicle_id="MV-002"} 0.0
+mec_achani_flag{vehicle_id="MV-003"} 0.0
+mec_achani_flag{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_attack_prediction Attack prediction (normal=0, icmp_flood=1, syn_flood=2, udp_flood=3, network_degradation_attack=4, slowloris_attack=5)
+# TYPE mec_attack_prediction gauge
+mec_attack_prediction{vehicle_id="MV-001"} 0.0
+mec_attack_prediction{vehicle_id="MV-002"} 0.0
+mec_attack_prediction{vehicle_id="MV-003"} 0.0
+mec_attack_prediction{vehicle_id="MV-KALI-REPLAY"} 4.0
+# HELP mec_attack_predictions_total Attack predictions by label
+# TYPE mec_attack_predictions_total counter
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-001"} 1220.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-002"} 1201.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-003"} 1219.0
+mec_attack_predictions_total{attack_type="network_degradation_attack",vehicle_id="MV-003"} 1.0
+mec_attack_predictions_total{attack_type="network_degradation_attack",vehicle_id="MV-KALI-REPLAY"} 5.0
+# HELP mec_attack_predictions_created Attack predictions by label
+# TYPE mec_attack_predictions_created gauge
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-001"} 1.7778572967057648e+09
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-002"} 1.7778572968039882e+09
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-003"} 1.7778572969061973e+09
+mec_attack_predictions_created{attack_type="network_degradation_attack",vehicle_id="MV-003"} 1.7778582370517354e+09
+mec_attack_predictions_created{attack_type="network_degradation_attack",vehicle_id="MV-KALI-REPLAY"} 1.777869000802096e+09
+# HELP mec_tamper_detected_total Tamper detections
+# TYPE mec_tamper_detected_total counter
+mec_tamper_detected_total{vehicle_id="MV-002"} 19.0
+mec_tamper_detected_total{vehicle_id="MV-KALI-INJECTION"} 1.0
+# HELP mec_tamper_detected_created Tamper detections
+# TYPE mec_tamper_detected_created gauge
+mec_tamper_detected_created{vehicle_id="MV-002"} 1.7778574117948642e+09
+mec_tamper_detected_created{vehicle_id="MV-KALI-INJECTION"} 1.7778689973360522e+09
+# HELP mec_validation_passed_total Validation passes
+# TYPE mec_validation_passed_total counter
+mec_validation_passed_total{vehicle_id="MV-001"} 1220.0
+mec_validation_passed_total{vehicle_id="MV-002"} 1201.0
+mec_validation_passed_total{vehicle_id="MV-003"} 1220.0
+mec_validation_passed_total{vehicle_id="MV-KALI-REPLAY"} 5.0
+# HELP mec_validation_passed_created Validation passes
+# TYPE mec_validation_passed_created gauge
+mec_validation_passed_created{vehicle_id="MV-001"} 1.7778572966721346e+09
+mec_validation_passed_created{vehicle_id="MV-002"} 1.7778572967773747e+09
+mec_validation_passed_created{vehicle_id="MV-003"} 1.7778572968753467e+09
+mec_validation_passed_created{vehicle_id="MV-KALI-REPLAY"} 1.7778690007486682e+09
+# HELP mec_validation_failures_total Validation failures
+# TYPE mec_validation_failures_total counter
+mec_validation_failures_total{field="speed_kmh",vehicle_id="MV-002"} 19.0
+mec_validation_failures_total{field="speed_kmh",vehicle_id="MV-KALI-INJECTION"} 4.0
+# HELP mec_validation_failures_created Validation failures
+# TYPE mec_validation_failures_created gauge
+mec_validation_failures_created{field="speed_kmh",vehicle_id="MV-002"} 1.7778574117948825e+09
+mec_validation_failures_created{field="speed_kmh",vehicle_id="MV-KALI-INJECTION"} 1.7778596370869322e+09
+# HELP mec_telemetry_received_total Telemetry received
+# TYPE mec_telemetry_received_total counter
+mec_telemetry_received_total{vehicle_id="MV-001"} 1220.0
+mec_telemetry_received_total{vehicle_id="MV-002"} 1220.0
+mec_telemetry_received_total{vehicle_id="MV-003"} 1220.0
+mec_telemetry_received_total{vehicle_id="MV-KALI-INJECTION"} 1.0
+mec_telemetry_received_total{vehicle_id="MV-KALI-REPLAY"} 5.0
+# HELP mec_telemetry_received_created Telemetry received
+# TYPE mec_telemetry_received_created gauge
+mec_telemetry_received_created{vehicle_id="MV-001"} 1.777857296672099e+09
+mec_telemetry_received_created{vehicle_id="MV-002"} 1.7778572967773438e+09
+mec_telemetry_received_created{vehicle_id="MV-003"} 1.777857296875313e+09
+mec_telemetry_received_created{vehicle_id="MV-KALI-INJECTION"} 1.7778689973360224e+09
+mec_telemetry_received_created{vehicle_id="MV-KALI-REPLAY"} 1.7778690007486374e+09
+# HELP mec_telemetry_rejected_total Telemetry rejected
+# TYPE mec_telemetry_rejected_total counter
+mec_telemetry_rejected_total{vehicle_id="MV-002"} 19.0
+mec_telemetry_rejected_total{vehicle_id="MV-KALI-INJECTION"} 1.0
+# HELP mec_telemetry_rejected_created Telemetry rejected
+# TYPE mec_telemetry_rejected_created gauge
+mec_telemetry_rejected_created{vehicle_id="MV-002"} 1.7778574117948732e+09
+mec_telemetry_rejected_created{vehicle_id="MV-KALI-INJECTION"} 1.777868997336061e+09
+# HELP mec_feature_importance_rtt_ms Feature importance for rtt_ms
+# TYPE mec_feature_importance_rtt_ms gauge
+mec_feature_importance_rtt_ms{vehicle_id="MV-001"} 1.0
+mec_feature_importance_rtt_ms{vehicle_id="MV-002"} 1.0
+mec_feature_importance_rtt_ms{vehicle_id="MV-003"} 1.0
+mec_feature_importance_rtt_ms{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_feature_importance_packet_loss_percent Feature importance for packet_loss_percent
+# TYPE mec_feature_importance_packet_loss_percent gauge
+mec_feature_importance_packet_loss_percent{vehicle_id="MV-001"} 0.8112
+mec_feature_importance_packet_loss_percent{vehicle_id="MV-002"} 0.8631
+mec_feature_importance_packet_loss_percent{vehicle_id="MV-003"} 0.8608
+mec_feature_importance_packet_loss_percent{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_feature_importance_dl_mbps Feature importance for dl_mbps
+# TYPE mec_feature_importance_dl_mbps gauge
+mec_feature_importance_dl_mbps{vehicle_id="MV-001"} 0.2765
+mec_feature_importance_dl_mbps{vehicle_id="MV-002"} 0.2877
+mec_feature_importance_dl_mbps{vehicle_id="MV-003"} 0.293
+mec_feature_importance_dl_mbps{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_feature_importance_ul_mbps Feature importance for ul_mbps
+# TYPE mec_feature_importance_ul_mbps gauge
+mec_feature_importance_ul_mbps{vehicle_id="MV-001"} 0.3872
+mec_feature_importance_ul_mbps{vehicle_id="MV-002"} 0.4219
+mec_feature_importance_ul_mbps{vehicle_id="MV-003"} 0.4029
+mec_feature_importance_ul_mbps{vehicle_id="MV-KALI-REPLAY"} 0.0
+# HELP mec_feature_importance_rsrp_dbm Feature importance for rsrp_dbm
+# TYPE mec_feature_importance_rsrp_dbm gauge
+mec_feature_importance_rsrp_dbm{vehicle_id="MV-001"} 0.0
+mec_feature_importance_rsrp_dbm{vehicle_id="MV-002"} 0.0
+mec_feature_importance_rsrp_dbm{vehicle_id="MV-003"} 0.0
+mec_feature_importance_rsrp_dbm{vehicle_id="MV-KALI-REPLAY"} 1.0
+# HELP mec_feature_importance_sinr_db Feature importance for sinr_db
+# TYPE mec_feature_importance_sinr_db gauge
+mec_feature_importance_sinr_db{vehicle_id="MV-001"} 0.0
+mec_feature_importance_sinr_db{vehicle_id="MV-002"} 0.0
+mec_feature_importance_sinr_db{vehicle_id="MV-003"} 0.0183
+mec_feature_importance_sinr_db{vehicle_id="MV-KALI-REPLAY"} 0.5

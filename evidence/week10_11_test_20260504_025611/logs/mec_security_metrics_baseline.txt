@@ -1,0 +1,53 @@
+[RUN] curl -s http://localhost:5001/metrics | grep -E 'tamper|rejected|replay|security|anomaly|prediction|quality|rate|protocol|achani' || true
+COMMAND: curl -s http://localhost:5001/metrics | grep -E 'tamper|rejected|replay|security|anomaly|prediction|quality|rate|protocol|achani' || true
+TIMESTAMP: Mon May  4 02:56:35 AM UTC 2026
+----------------------------------------------------------
+# HELP mec_anomaly_score Anomaly score
+# TYPE mec_anomaly_score gauge
+mec_anomaly_score{vehicle_id="MV-001"} 0.0
+mec_anomaly_score{vehicle_id="MV-002"} 0.0
+mec_anomaly_score{vehicle_id="MV-003"} 0.0
+# HELP mec_protocol_prediction Protocol prediction (tcp=1, udp=2, icmp=3)
+# TYPE mec_protocol_prediction gauge
+mec_protocol_prediction{vehicle_id="MV-001"} 1.0
+mec_protocol_prediction{vehicle_id="MV-002"} 1.0
+mec_protocol_prediction{vehicle_id="MV-003"} 1.0
+# HELP mec_traffic_quality Traffic quality (good=1, normal=2, bad=3)
+# TYPE mec_traffic_quality gauge
+mec_traffic_quality{vehicle_id="MV-001"} 1.0
+mec_traffic_quality{vehicle_id="MV-002"} 1.0
+mec_traffic_quality{vehicle_id="MV-003"} 1.0
+# HELP mec_achani_flag Achani anomaly flag
+# TYPE mec_achani_flag gauge
+mec_achani_flag{vehicle_id="MV-001"} 0.0
+mec_achani_flag{vehicle_id="MV-002"} 0.0
+mec_achani_flag{vehicle_id="MV-003"} 0.0
+# HELP mec_attack_prediction Attack prediction (normal=0, icmp_flood=1, syn_flood=2, udp_flood=3, network_degradation_attack=4, slowloris_attack=5)
+# TYPE mec_attack_prediction gauge
+mec_attack_prediction{vehicle_id="MV-001"} 0.0
+mec_attack_prediction{vehicle_id="MV-002"} 0.0
+mec_attack_prediction{vehicle_id="MV-003"} 0.0
+# HELP mec_attack_predictions_total Attack predictions by label
+# TYPE mec_attack_predictions_total counter
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-001"} 1208.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-002"} 1189.0
+mec_attack_predictions_total{attack_type="normal",vehicle_id="MV-003"} 1207.0
+mec_attack_predictions_total{attack_type="network_degradation_attack",vehicle_id="MV-003"} 1.0
+# HELP mec_attack_predictions_created Attack predictions by label
+# TYPE mec_attack_predictions_created gauge
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-001"} 1.7778572967057648e+09
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-002"} 1.7778572968039882e+09
+mec_attack_predictions_created{attack_type="normal",vehicle_id="MV-003"} 1.7778572969061973e+09
+mec_attack_predictions_created{attack_type="network_degradation_attack",vehicle_id="MV-003"} 1.7778582370517354e+09
+# HELP mec_tamper_detected_total Tamper detections
+# TYPE mec_tamper_detected_total counter
+mec_tamper_detected_total{vehicle_id="MV-002"} 19.0
+# HELP mec_tamper_detected_created Tamper detections
+# TYPE mec_tamper_detected_created gauge
+mec_tamper_detected_created{vehicle_id="MV-002"} 1.7778574117948642e+09
+# HELP mec_telemetry_rejected_total Telemetry rejected
+# TYPE mec_telemetry_rejected_total counter
+mec_telemetry_rejected_total{vehicle_id="MV-002"} 19.0
+# HELP mec_telemetry_rejected_created Telemetry rejected
+# TYPE mec_telemetry_rejected_created gauge
+mec_telemetry_rejected_created{vehicle_id="MV-002"} 1.7778574117948732e+09

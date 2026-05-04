@@ -1,0 +1,26 @@
+[RUN] docker exec kali-attacker bash -c '
+for i in $(seq 1 5); do
+  curl -s -X POST http://10.0.0.45:5000/telemetry     -H "Content-Type: application/json"     -d "{\"vehicle_id\":\"MV-KALI-REPLAY\",\"speed_kmh\":25,\"fuel_liters\":1200,\"battery_percent\":75,\"engine_temp_c\":88,\"rsrp_dbm\":-78,\"rtt_ms\":25,\"packet_loss_percent\":1.2,\"payload_tons\":60,\"sinr_db\":18,\"ul_mbps\":12,\"dl_mbps\":55}"
+  echo
+  sleep 0.2
+done
+'
+COMMAND: docker exec kali-attacker bash -c '
+for i in $(seq 1 5); do
+  curl -s -X POST http://10.0.0.45:5000/telemetry     -H "Content-Type: application/json"     -d "{\"vehicle_id\":\"MV-KALI-REPLAY\",\"speed_kmh\":25,\"fuel_liters\":1200,\"battery_percent\":75,\"engine_temp_c\":88,\"rsrp_dbm\":-78,\"rtt_ms\":25,\"packet_loss_percent\":1.2,\"payload_tons\":60,\"sinr_db\":18,\"ul_mbps\":12,\"dl_mbps\":55}"
+  echo
+  sleep 0.2
+done
+'
+TIMESTAMP: Mon May  4 04:29:59 AM UTC 2026
+----------------------------------------------------------
+{"achani_flag":true,"anomaly_score":0.1,"attack_type":"network_degradation_attack","feature_importance":{"dl_mbps":0.0,"packet_loss_percent":0.0,"rsrp_dbm":1.0,"rtt_ms":0.0,"sinr_db":0.5,"ul_mbps":0.0},"is_attack":true,"processing_time_ms":0.1,"protocol_prediction":"tcp","status":"ok","tamper_detected":false,"timestamp":"2026-05-04T04:30:00.988133+00:00","traffic_quality":"good","validation_passed":true,"vehicle_id":"MV-KALI-REPLAY"}
+
+{"achani_flag":true,"anomaly_score":0.1,"attack_type":"network_degradation_attack","feature_importance":{"dl_mbps":0.0,"packet_loss_percent":0.0,"rsrp_dbm":1.0,"rtt_ms":0.0,"sinr_db":0.5,"ul_mbps":0.0},"is_attack":true,"processing_time_ms":1.99,"protocol_prediction":"tcp","status":"ok","tamper_detected":false,"timestamp":"2026-05-04T04:30:01.860655+00:00","traffic_quality":"good","validation_passed":true,"vehicle_id":"MV-KALI-REPLAY"}
+
+{"achani_flag":true,"anomaly_score":0.0,"attack_type":"network_degradation_attack","feature_importance":{"dl_mbps":0.0,"packet_loss_percent":0.0,"rsrp_dbm":1.0,"rtt_ms":0.0,"sinr_db":0.5,"ul_mbps":0.0},"is_attack":true,"processing_time_ms":1.0,"protocol_prediction":"tcp","status":"ok","tamper_detected":false,"timestamp":"2026-05-04T04:30:02.493809+00:00","traffic_quality":"good","validation_passed":true,"vehicle_id":"MV-KALI-REPLAY"}
+
+{"achani_flag":true,"anomaly_score":0.0,"attack_type":"network_degradation_attack","feature_importance":{"dl_mbps":0.0,"packet_loss_percent":0.0,"rsrp_dbm":1.0,"rtt_ms":0.0,"sinr_db":0.5,"ul_mbps":0.0},"is_attack":true,"processing_time_ms":0.1,"protocol_prediction":"tcp","status":"ok","tamper_detected":false,"timestamp":"2026-05-04T04:30:03.001196+00:00","traffic_quality":"good","validation_passed":true,"vehicle_id":"MV-KALI-REPLAY"}
+
+{"achani_flag":true,"anomaly_score":0.0,"attack_type":"network_degradation_attack","feature_importance":{"dl_mbps":0.0,"packet_loss_percent":0.0,"rsrp_dbm":1.0,"rtt_ms":0.0,"sinr_db":0.5,"ul_mbps":0.0},"is_attack":true,"processing_time_ms":0.4,"protocol_prediction":"tcp","status":"ok","tamper_detected":false,"timestamp":"2026-05-04T04:30:03.440020+00:00","traffic_quality":"good","validation_passed":true,"vehicle_id":"MV-KALI-REPLAY"}
+

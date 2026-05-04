@@ -1,0 +1,5 @@
+[RUN] docker exec kali-attacker bash -c 'for i in $(seq 1 300); do curl -s -o /dev/null http://10.0.0.45:5000/health & done; wait; echo HTTP_BURST_COMPLETED'
+COMMAND: docker exec kali-attacker bash -c 'for i in $(seq 1 300); do curl -s -o /dev/null http://10.0.0.45:5000/health & done; wait; echo HTTP_BURST_COMPLETED'
+TIMESTAMP: Mon May  4 02:57:09 AM UTC 2026
+----------------------------------------------------------
+HTTP_BURST_COMPLETED
