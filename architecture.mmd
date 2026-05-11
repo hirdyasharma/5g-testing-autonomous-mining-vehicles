@@ -1,0 +1,27 @@
+flowchart LR
+    SIM["Physics / Scenario Simulator"] --> PUB["MQTT Telemetry Publisher"]
+    PUB --> BROKER["MQTT Broker"]
+    BROKER --> BRIDGE["MQTT-to-MEC Bridge"]
+    BRIDGE --> MEC["MEC Edge Security API"]
+    SIM -.fallback HTTP.-> MEC
+
+    UE["UERANSIM UE(s)"] --> GNB["UERANSIM gNB"]
+    GNB --> AMF["Open5GS AMF"]
+    AMF --> SMF["Open5GS SMF"]
+    SMF --> UPF["Open5GS UPF"]
+    AMF --> NRF["NRF/AUSF/UDM/UDR/PCF"]
+
+    MEC --> ML["Achani ML Models"]
+    MEC --> EVENTS["MEC Events JSON/CSV"]
+    MEC --> PROM["Prometheus"]
+    BRIDGE --> PROM
+    SIM --> PROM
+    AMF --> PROM
+    UPF --> PROM
+    PROM --> GRAF["Grafana"]
+
+    KALI["Internal Kali Attacker"] --> MEC
+    KALI --> UPF
+    KALI --> BROKER
+    KALI --> PCAP["PCAP + Evidence Folder"]
+    EVENTS --> PCAP
