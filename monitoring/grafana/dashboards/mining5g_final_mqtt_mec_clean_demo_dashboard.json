@@ -1,7 +1,7 @@
 {
-  "title": "5G Mining Vehicle Security \u2014 Final MQTT + MEC Dashboard",
-  "uid": "mining5g-final-mqtt-mec",
-  "version": 1,
+  "title": "5G Mining Vehicle Security \u2014 Final MQTT + MEC Dashboard (Clean Demo)",
+  "uid": "mining5g-final-mqtt-clean",
+  "version": 2,
   "schemaVersion": 38,
   "refresh": "5s",
   "time": {
@@ -3537,7 +3537,7 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m]))",
+          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m])) OR vector(0)",
           "legendFormat": "AI Detections 5m",
           "refId": "A"
         }
@@ -3887,440 +3887,12 @@
       }
     },
     {
-      "id": 65,
-      "title": "8. Threat / MITRE-Style Evidence",
+      "id": 73,
+      "title": "8. Kali Network Attack Evidence",
       "type": "row",
       "gridPos": {
         "x": 0,
         "y": 91,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 66,
-      "title": "Active Telemetry Tampering \u2014 5m",
-      "type": "stat",
-      "gridPos": {
-        "x": 0,
-        "y": 92,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_tamper_detected_total[5m])) > bool 0",
-          "legendFormat": "Active Telemetry Tampering \u2014 5m",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Recent tamper only; avoids staying red forever."
-    },
-    {
-      "id": 67,
-      "title": "Telemetry Availability / DoS Indicator",
-      "type": "stat",
-      "gridPos": {
-        "x": 6,
-        "y": 92,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "max(1 - up{job=\"mining-telemetry\"})",
-          "legendFormat": "Telemetry Availability / DoS Indicator",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Indicates exporter down. Pair with Kali logs/PCAP before calling it DoS."
-    },
-    {
-      "id": 68,
-      "title": "Degradation Indicator",
-      "type": "stat",
-      "gridPos": {
-        "x": 12,
-        "y": 92,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "(max(mining_vehicle_packet_loss_percent) > bool 10) or (max(mining_vehicle_rtt_ms) > bool 200) or (min(mining_vehicle_rsrp_dbm) < bool -110) or (min(mining_vehicle_sinr_db) < bool 5)",
-          "legendFormat": "Degradation Indicator",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Jamming/degradation-style indicator based on telemetry symptoms."
-    },
-    {
-      "id": 69,
-      "title": "Active Alert Count",
-      "type": "stat",
-      "gridPos": {
-        "x": 18,
-        "y": 92,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "count(ALERTS{alertstate=\"firing\"}) OR vector(0)",
-          "legendFormat": "Active Alert Count",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 3
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 70,
-      "title": "Vehicle Threat Score",
-      "type": "gauge",
-      "gridPos": {
-        "x": 0,
-        "y": 96,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "clamp_max(clamp_max(max(mining_vehicle_packet_loss_percent) * 5, 40) + clamp_max((max(mining_vehicle_rtt_ms) - 20) / 4, 30) + clamp_max(sum(increase(mec_tamper_detected_total[5m])) * 10, 30),100)",
-          "legendFormat": "Vehicle Threat Score",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "description": "Composite score using recent packet loss, RTT and recent tamper events."
-    },
-    {
-      "id": 71,
-      "title": "Packet Loss Heatmap \u2014 Attack Patterns",
-      "type": "heatmap",
-      "gridPos": {
-        "x": 8,
-        "y": 96,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_packet_loss_percent",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "options": {
-        "calculate": false,
-        "cellGap": 1,
-        "cellValues": {},
-        "color": {
-          "mode": "scheme",
-          "scheme": "Spectral",
-          "steps": 64
-        },
-        "exemplars": {
-          "color": "rgba(255,0,255,0.7)"
-        },
-        "filterValues": {
-          "le": 1e-09
-        },
-        "legend": {
-          "show": true
-        },
-        "rowsFrame": {
-          "layout": "auto"
-        },
-        "tooltip": {
-          "show": true,
-          "yHistogram": false
-        },
-        "yAxis": {
-          "axisPlacement": "left",
-          "reverse": false
-        }
-      }
-    },
-    {
-      "id": 72,
-      "title": "Alert Rule Details",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 16,
-        "y": 96,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "ALERTS",
-          "legendFormat": "{{alertname}} {{alertstate}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 73,
-      "title": "9. Kali Network Attack Evidence",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 102,
         "w": 24,
         "h": 1
       },
@@ -4333,7 +3905,7 @@
       "type": "timeseries",
       "gridPos": {
         "x": 0,
-        "y": 103,
+        "y": 92,
         "w": 12,
         "h": 6
       },
@@ -4409,7 +3981,7 @@
       "type": "timeseries",
       "gridPos": {
         "x": 12,
-        "y": 103,
+        "y": 92,
         "w": 12,
         "h": 6
       },
@@ -4490,7 +4062,7 @@
       "type": "stat",
       "gridPos": {
         "x": 0,
-        "y": 109,
+        "y": 98,
         "w": 6,
         "h": 4
       },
@@ -4545,7 +4117,7 @@
       "type": "stat",
       "gridPos": {
         "x": 6,
-        "y": 109,
+        "y": 98,
         "w": 6,
         "h": 4
       },
@@ -4595,130 +4167,12 @@
       }
     },
     {
-      "id": 78,
-      "title": "Attack Predictions Evidence 1h",
-      "type": "stat",
-      "gridPos": {
-        "x": 12,
-        "y": 109,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
-          "legendFormat": "Attack Predictions Evidence 1h",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 3
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 79,
-      "title": "Rejected Telemetry Evidence 1h",
-      "type": "stat",
-      "gridPos": {
-        "x": 18,
-        "y": 109,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_telemetry_rejected_total[1h]))",
-          "legendFormat": "Rejected Telemetry Evidence 1h",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 3
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
       "id": 80,
-      "title": "10. Loki Forensic Evidence / Query Notes",
+      "title": "9. Loki Forensic Evidence / Query Notes",
       "type": "row",
       "gridPos": {
         "x": 0,
-        "y": 113,
+        "y": 102,
         "w": 24,
         "h": 1
       },
@@ -4731,22 +4185,22 @@
       "type": "text",
       "gridPos": {
         "x": 0,
-        "y": 114,
+        "y": 103,
         "w": 24,
         "h": 8
       },
       "options": {
         "mode": "markdown",
-        "content": "Use **Grafana \u2192 Explore \u2192 Loki** for forensic proof.\n\nRecommended queries:\n\n```logql\n{job=\"mec-edge\"} |= \"TAMPER\"\n{job=\"mec-edge\"} |= \"TAMPER\" |= \"MV-001\"\n{job=\"mqtt-bridge\"} |= \"telemetry_tamper\"\n{job=\"mqtt-bridge\"} |= \"400\"\n{job=\"docker-containers\"} |= \"TAMPER\"\n```\n\nMetrics show counts. Loki shows searchable event evidence: which vehicle, what payload/path, and what was rejected.\n"
+        "content": "### Grafana Explore \u2192 Loki forensic proof\n\nUse these only when explaining log evidence. Metrics show counts; Loki shows the searchable event trail.\n\n**Start broad first**\n```logql\n{job=~\".+\"}\n{job=~\".+\"} |= \"TAMPER\"\n{job=~\".+\"} |= \"MV-001\"\n```\n\n**If job labels are configured**\n```logql\n{job=\"mec-edge\"} |= \"TAMPER\" |= \"MV-001\"\n{job=\"mqtt-bridge\"} |= \"telemetry_tamper\"\n{job=\"mqtt-bridge\"} |= \"400\"\n{job=\"docker-containers\"} |= \"TAMPER\"\n```\n\nUse Loki as forensic evidence only after the dashboard counters show MQTT/MEC rejection.\n"
       }
     },
     {
       "id": 82,
-      "title": "11. Demo Commands",
+      "title": "10. Demo Commands",
       "type": "row",
       "gridPos": {
         "x": 0,
-        "y": 122,
+        "y": 111,
         "w": 24,
         "h": 1
       },
@@ -4759,13 +4213,13 @@
       "type": "text",
       "gridPos": {
         "x": 0,
-        "y": 123,
+        "y": 112,
         "w": 24,
-        "h": 10
+        "h": 22
       },
       "options": {
         "mode": "markdown",
-        "content": "**MQTT valid telemetry**\n\n```bash\ndocker exec kali-attacker mosquitto_pub -h mosquitto -u mininguser -P miningpass123 \\\n  -t \"mining/vehicles/MV-001/telemetry\" \\\n  -m '{\"vehicle_id\":\"MV-001\",\"speed_kmh\":25,\"fuel_liters\":900,\"battery_percent\":82,\"engine_temp_c\":85,\"rsrp_dbm\":-70,\"rtt_ms\":20,\"packet_loss_percent\":0.5,\"payload_tons\":70,\"sinr_db\":24,\"ul_mbps\":18,\"dl_mbps\":80}'\n```\n\n**MQTT tamper telemetry**\n\n```bash\ndocker exec kali-attacker mosquitto_pub -h mosquitto -u mininguser -P miningpass123 \\\n  -t \"mining/vehicles/MV-001/telemetry\" \\\n  -m '{\"vehicle_id\":\"MV-001\",\"speed_kmh\":999,\"fuel_liters\":2400,\"battery_percent\":82,\"engine_temp_c\":85,\"rsrp_dbm\":-70,\"rtt_ms\":20,\"packet_loss_percent\":0.5,\"payload_tons\":250,\"sinr_db\":24,\"ul_mbps\":18,\"dl_mbps\":80}'\n```\n\n**Kali TCP/UDP proof**\n\n```bash\ntimeout 10s docker exec kali-attacker hping3 -S --flood -p 5000 10.0.0.45\ntimeout 10s docker exec kali-attacker hping3 --udp --flood -p 2152 10.0.0.22\n```\n"
+        "content": "### Final Demo Commands \u2014 run only what you need\n\n#### 0) Health checks\n```bash\ndocker compose ps\ncurl -s http://localhost:5001/health\ncurl -s http://localhost:8010/health\ncurl -s http://localhost:3100/ready\ncurl -s \"http://localhost:9190/api/v1/query?query=up\" | python3 -m json.tool\n```\n\n#### 1) Prometheus target checks\n```bash\ncurl -s \"http://localhost:9190/api/v1/query?query=up%7Bjob%3D%22open5gs-amf%22%7D\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=up%7Bjob%3D%22open5gs-upf%22%7D\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=up%7Bjob%3D~%22mqtt-bridge%7Cmqtt-to-mec-bridge%22%7D\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=up%7Bjob%3D%22scenario-simulator%22%7D\" | python3 -m json.tool\n```\n\n#### 2) MQTT pipeline proof\n```bash\ncurl -s \"http://localhost:9190/api/v1/query?query=mqtt_messages_received_total\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=mqtt_messages_forwarded_total\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=mqtt_messages_rejected_total\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=mqtt_bridge_errors_total\" | python3 -m json.tool\ndocker logs mqtt-bridge --tail 80\n```\n\n#### 3) Scenario changes\n```bash\ncurl -X POST http://localhost:8010/scenario/normal\ncurl -X POST http://localhost:8010/scenario/tcp_syn_like\ncurl -X POST http://localhost:8010/scenario/udp_like\ncurl -X POST http://localhost:8010/scenario/icmp_like\ncurl -X POST http://localhost:8010/scenario/network_congestion\ncurl -X POST http://localhost:8010/scenario/signal_degradation\ncurl -X POST http://localhost:8010/scenario/tamper\ncurl -X POST http://localhost:8010/scenario/replay\n```\n\n#### 4) MEC security proof after tamper\n```bash\ncurl -s \"http://localhost:9190/api/v1/query?query=mec_tamper_detected_total\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=mec_telemetry_rejected_total\" | python3 -m json.tool\ncurl -s \"http://localhost:9190/api/v1/query?query=mec_validation_failures_total\" | python3 -m json.tool\ndocker logs mec-edge --tail 120 | grep -i \"TAMPER\\|WARNING\\|MV-001\\|400\"\n```\n\n#### 5) Kali network tests\n```bash\ndocker exec kali-attacker nmap -sT -Pn 10.0.0.45\ntimeout 10s docker exec kali-attacker hping3 -S --flood -p 5000 10.0.0.45\ntimeout 10s docker exec kali-attacker hping3 --udp --flood -p 2152 10.0.0.22\ntimeout 10s docker exec kali-attacker hping3 --icmp --flood 10.0.0.45\ntimeout 20s docker exec kali-attacker slowhttptest -c 80 -H -i 10 -r 20 -t GET -u http://10.0.0.45:5000/health -x 24 -p 3\n```\n\n#### 6) Loki forensic proof\n```bash\ncurl -G -s \"http://localhost:3100/loki/api/v1/label/job/values\" | python3 -m json.tool\ncurl -G -s \"http://localhost:3100/loki/api/v1/query\" --data-urlencode 'query={job=~\".+\"} |= \"TAMPER\"' | python3 -m json.tool\ncurl -G -s \"http://localhost:3100/loki/api/v1/query\" --data-urlencode 'query={job=~\".+\"} |= \"MV-001\"' | python3 -m json.tool\n```\n\n#### 7) Recovery\n```bash\ncurl -X POST http://localhost:8010/scenario/normal\ndocker compose ps\ncurl -s http://localhost:5001/health\n```\n"
       }
     }
   ],
