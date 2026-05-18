@@ -38,3 +38,7 @@ scrape_configs:
   - job_name: "scenario-simulator"
     static_configs:
       - targets: ["10.0.0.41:8001"]
+
+  - job_name: 'mqtt-bridge'
+    static_configs:
+      - targets: ['mqtt-bridge:9105']

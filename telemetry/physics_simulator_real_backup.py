@@ -7,8 +7,6 @@ Komatsu 730E Newtonian motion model.
 Metric names match Grafana dashboard exactly.
 """
 import time, math, random, json, requests, csv, os, argparse
-import json
-import paho.mqtt.client as mqtt
 from datetime import datetime, timezone
 from prometheus_client import Gauge, Counter, Histogram, start_http_server
 
@@ -131,39 +129,20 @@ class Vehicle:
                     handover=r['handover'],tunnel=r['tunnel'])
 
 class Sim:
-    MEC='http://10.0.0.45:5000/telemetry'
-    MQTT_BROKER='mosquitto'
-    MQTT_PORT=1883
-    MQTT_TOPIC_PREFIX='mining/vehicles'
-    DT=5.0
-    PORT=8000
+    MEC='http://10.0.0.45:5000/telemetry'; DT=5.0; PORT=8000
 
     def __init__(self,export=False,dur=300):
         self.vs=[Vehicle('MV-001',55.7,0,700),Vehicle('MV-002',9.56,5,575),Vehicle('MV-003',90.1,10,735)]
         self.export=export; self.dur=dur; self.rows=[]; self.mec=False
-        self.mqtt_client = mqtt.Client()
-        self.mqtt_client.username_pw_set("mininguser", "miningpass123")
-        self.mqtt_ready = False
-        try:
-            self.mqtt_client.connect(self.MQTT_BROKER, self.MQTT_PORT, 60)
-            self.mqtt_client.loop_start()
-            self.mqtt_ready = True
-            print("Connected to MQTT broker for vehicle telemetry publishing")
-        except Exception as e:
-            print(f"MQTT connection failed: {e}")
 
     def _chk(self):
         try: self.mec=requests.get(self.MEC.replace('/telemetry','/health'),timeout=2).status_code==200
         except: self.mec=False
 
     def _post(self,p):
-        if self.mqtt_ready:
-            try:
-                topic = f"{self.MQTT_TOPIC_PREFIX}/{p['vehicle_id']}/telemetry"
-                self.mqtt_client.publish(topic, json.dumps(p))
-                print(f"Published MQTT telemetry to {topic}")
-            except Exception as e:
-                print(f"MQTT publish failed: {e}")
+        if self.mec:
+            try: requests.post(self.MEC,json=p,timeout=3)
+            except: pass
 
     def _prom(self,v,s):
         i=v.vid
