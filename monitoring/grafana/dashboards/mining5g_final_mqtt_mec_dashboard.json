@@ -1,17 +1,17 @@
 {
-  "title": "5G Mining Vehicle Security \u2014 Combined Achani + Deepika Demo v5",
-  "uid": "mining5g-combined-ai-mitre-v5",
+  "title": "5G Mining Vehicle Security \u2014 Final MQTT + MEC Dashboard",
+  "uid": "mining5g-final-mqtt-mec",
   "version": 1,
   "schemaVersion": 38,
   "refresh": "5s",
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timezone": "browser",
   "panels": [
     {
-      "id": 1000,
+      "id": 1,
       "title": "1. Live Demo Summary",
       "type": "row",
       "gridPos": {
@@ -24,7 +24,7 @@
       "panels": []
     },
     {
-      "id": 1,
+      "id": 2,
       "title": "Active Vehicles",
       "type": "stat",
       "gridPos": {
@@ -40,7 +40,7 @@
       "targets": [
         {
           "expr": "count(count_over_time(mining_vehicle_rtt_ms[1m]))",
-          "legendFormat": "vehicles",
+          "legendFormat": "Active Vehicles",
           "refId": "A"
         }
       ],
@@ -81,10 +81,10 @@
         "graphMode": "area",
         "justifyMode": "auto"
       },
-      "description": "Counts vehicles with recent RTT telemetry. Replaces old count(up{job='mining-telemetry'}) which only counted exporter target."
+      "description": "Counts vehicles with recent RTT telemetry."
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "AMF UP",
       "type": "stat",
       "gridPos": {
@@ -100,62 +100,7 @@
       "targets": [
         {
           "expr": "up{job=\"open5gs-amf\"}",
-          "legendFormat": "AMF",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 3,
-      "title": "UPF UP",
-      "type": "stat",
-      "gridPos": {
-        "x": 8,
-        "y": 1,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"open5gs-upf\"}",
-          "legendFormat": "UPF",
+          "legendFormat": "AMF UP",
           "refId": "A"
         }
       ],
@@ -195,10 +140,10 @@
     },
     {
       "id": 4,
-      "title": "Avg RTT",
+      "title": "UPF UP",
       "type": "stat",
       "gridPos": {
-        "x": 12,
+        "x": 8,
         "y": 1,
         "w": 4,
         "h": 4
@@ -209,29 +154,24 @@
       },
       "targets": [
         {
-          "expr": "avg(mining_vehicle_rtt_ms)",
-          "legendFormat": "ms",
+          "expr": "up{job=\"open5gs-upf\"}",
+          "legendFormat": "UPF UP",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "unit": "ms",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 50
-              },
-              {
-                "color": "red",
-                "value": 100
+                "color": "green",
+                "value": 1
               }
             ]
           }
@@ -255,10 +195,10 @@
     },
     {
       "id": 5,
-      "title": "Tamper 5m",
+      "title": "MEC Edge UP",
       "type": "stat",
       "gridPos": {
-        "x": 16,
+        "x": 12,
         "y": 1,
         "w": 4,
         "h": 4
@@ -269,8 +209,8 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(mec_tamper_detected_total[5m]))",
-          "legendFormat": "tamper",
+          "expr": "up{job=\"mec-edge\"}",
+          "legendFormat": "MEC Edge UP",
           "refId": "A"
         }
       ],
@@ -281,16 +221,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "orange",
+                "color": "green",
                 "value": 1
-              },
-              {
-                "color": "red",
-                "value": 3
               }
             ]
           }
@@ -314,7 +250,63 @@
     },
     {
       "id": 6,
-      "title": "Rejected 5m",
+      "title": "MQTT Bridge UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 1,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "max(up{job=~\"mqtt-bridge|mqtt-to-mec-bridge\"})",
+          "legendFormat": "MQTT Bridge UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "description": "Supports either mqtt-bridge or mqtt-to-mec-bridge job name."
+    },
+    {
+      "id": 7,
+      "title": "Recent Rejected Telemetry",
       "type": "stat",
       "gridPos": {
         "x": 20,
@@ -329,7 +321,7 @@
       "targets": [
         {
           "expr": "sum(increase(mec_telemetry_rejected_total[5m]))",
-          "legendFormat": "rejected",
+          "legendFormat": "Recent Rejected Telemetry",
           "refId": "A"
         }
       ],
@@ -372,8 +364,8 @@
       }
     },
     {
-      "id": 1100,
-      "title": "2. 5G Control Plane \u2014 AMF/UPF Monitoring",
+      "id": 8,
+      "title": "2. MQTT Telemetry Ingestion \u2014 Main Data Path",
       "type": "row",
       "gridPos": {
         "x": 0,
@@ -385,13 +377,1417 @@
       "panels": []
     },
     {
-      "id": 10,
-      "title": "AMF Scrape Duration",
-      "type": "timeseries",
+      "id": 9,
+      "title": "MQTT Messages Received 5m",
+      "type": "stat",
       "gridPos": {
         "x": 0,
         "y": 6,
-        "w": 8,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_messages_received_total[5m]))",
+          "legendFormat": "MQTT Messages Received 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 10,
+      "title": "MQTT Forwarded to MEC 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 4,
+        "y": 6,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_messages_forwarded_total[5m]))",
+          "legendFormat": "MQTT Forwarded to MEC 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "title": "MQTT Rejected 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 8,
+        "y": 6,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_messages_rejected_total[5m]))",
+          "legendFormat": "MQTT Rejected 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 12,
+      "title": "MQTT Bridge Errors 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_bridge_errors_total[5m]))",
+          "legendFormat": "MQTT Bridge Errors 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 13,
+      "title": "MQTT Attack Rate",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 6,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(mqtt_messages_rejected_total[1m]))",
+          "legendFormat": "MQTT Attack Rate",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 14,
+      "title": "MQTT Auth / Ingestion Health",
+      "type": "stat",
+      "gridPos": {
+        "x": 20,
+        "y": 6,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "max(up{job=~\"mqtt-bridge|mqtt-to-mec-bridge\"})",
+          "legendFormat": "MQTT Auth / Ingestion Health",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "description": "Bridge health; unauthorised publishing should be blocked by Mosquitto auth and confirmed in logs."
+    },
+    {
+      "id": 15,
+      "title": "MQTT Attack Types",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 10,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (attack_type) (increase(mqtt_messages_rejected_total[5m]))",
+          "legendFormat": "{{attack_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      },
+      "description": "Rejected MQTT messages grouped by attack_type label, e.g. telemetry_tamper."
+    },
+    {
+      "id": 16,
+      "title": "MQTT Rejected by Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 10,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (vehicle_id) (increase(mqtt_messages_rejected_total[5m]))",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      },
+      "description": "Shows which vehicle generated rejected MQTT telemetry."
+    },
+    {
+      "id": 17,
+      "title": "3. MQTT \u2192 MEC Security Correlation",
+      "type": "row",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 18,
+      "title": "MQTT Rejected vs MEC Rejected",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 17,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_messages_rejected_total[5m]))",
+          "legendFormat": "MQTT rejected",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(increase(mec_telemetry_rejected_total[5m]))",
+          "legendFormat": "MEC rejected",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      },
+      "description": "Correlates MQTT-originated attack messages with MEC rejection."
+    },
+    {
+      "id": 19,
+      "title": "MQTT Rejected vs MEC Tamper",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 17,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mqtt_messages_rejected_total[5m]))",
+          "legendFormat": "MQTT rejected",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(increase(mec_tamper_detected_total[5m]))",
+          "legendFormat": "MEC tamper",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 20,
+      "title": "MEC Telemetry Received 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_telemetry_received_total[5m]))",
+          "legendFormat": "MEC Telemetry Received 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 21,
+      "title": "MEC Validation Passed 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 4,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_validation_passed_total[5m]))",
+          "legendFormat": "MEC Validation Passed 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 22,
+      "title": "MEC Validation Failed 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 8,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_validation_failures_total[5m]))",
+          "legendFormat": "MEC Validation Failed 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 23,
+      "title": "MEC Rejection Rate %",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "100 * sum(increase(mec_telemetry_rejected_total[5m])) / clamp_min(sum(increase(mec_telemetry_received_total[5m])), 1)",
+          "legendFormat": "MEC Rejection Rate %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 24,
+      "title": "MEC Processing Time",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(mec_processing_time_ms)",
+          "legendFormat": "MEC Processing Time",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 250
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 25,
+      "title": "MEC Tamper 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 20,
+        "y": 23,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_tamper_detected_total[5m]))",
+          "legendFormat": "MEC Tamper 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 26,
+      "title": "Validation Failures by Field",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 27,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (field) (increase(mec_validation_failures_total[5m]))",
+          "legendFormat": "{{field}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      },
+      "description": "Shows why MEC rejected telemetry, e.g. speed_kmh or payload_tons."
+    },
+    {
+      "id": 27,
+      "title": "4. 5G Control and User Plane",
+      "type": "row",
+      "gridPos": {
+        "x": 0,
+        "y": 33,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 28,
+      "title": "AMF Target",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"open5gs-amf\"}",
+          "legendFormat": "AMF Target",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 29,
+      "title": "UPF Target",
+      "type": "stat",
+      "gridPos": {
+        "x": 4,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"open5gs-upf\"}",
+          "legendFormat": "UPF Target",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 30,
+      "title": "Scenario Simulator UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 8,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"scenario-simulator\"}",
+          "legendFormat": "Scenario Simulator UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 31,
+      "title": "Telemetry Exporter UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"mining-telemetry\"}",
+          "legendFormat": "Telemetry Exporter UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 32,
+      "title": "Prometheus UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 16,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"prometheus\"}",
+          "legendFormat": "Prometheus UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 33,
+      "title": "Node Exporter UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 20,
+        "y": 34,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"node-exporter\"}",
+          "legendFormat": "Node Exporter UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 34,
+      "title": "AMF / UPF Scrape Duration",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 38,
+        "w": 12,
         "h": 6
       },
       "datasource": {
@@ -403,77 +1799,11 @@
           "expr": "scrape_duration_seconds{job=\"open5gs-amf\"}",
           "legendFormat": "AMF scrape",
           "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "s"
         },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 11,
-      "title": "UPF Scrape Duration",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 8,
-        "y": 6,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
         {
           "expr": "scrape_duration_seconds{job=\"open5gs-upf\"}",
           "legendFormat": "UPF scrape",
-          "refId": "A"
+          "refId": "B"
         }
       ],
       "fieldConfig": {
@@ -527,13 +1857,13 @@
       }
     },
     {
-      "id": 12,
-      "title": "Open5GS Targets Up",
+      "id": 35,
+      "title": "RTT and Packet Loss Overview",
       "type": "timeseries",
       "gridPos": {
-        "x": 16,
-        "y": 6,
-        "w": 8,
+        "x": 12,
+        "y": 38,
+        "w": 12,
         "h": 6
       },
       "datasource": {
@@ -542,9 +1872,14 @@
       },
       "targets": [
         {
-          "expr": "up{job=~\"open5gs-amf|open5gs-upf\"}",
-          "legendFormat": "{{job}}",
+          "expr": "avg(mining_vehicle_rtt_ms)",
+          "legendFormat": "Avg RTT ms",
           "refId": "A"
+        },
+        {
+          "expr": "avg(mining_vehicle_packet_loss_percent)",
+          "legendFormat": "Avg packet loss %",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
@@ -577,9 +1912,7 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          },
-          "min": 0,
-          "max": 1
+          }
         },
         "overrides": []
       },
@@ -599,12 +1932,12 @@
       }
     },
     {
-      "id": 1200,
-      "title": "3. 5G User Plane \u2014 Vehicle Network Performance",
+      "id": 36,
+      "title": "5. Vehicle Telemetry / Mining Context",
       "type": "row",
       "gridPos": {
         "x": 0,
-        "y": 12,
+        "y": 44,
         "w": 24,
         "h": 1
       },
@@ -612,12 +1945,12 @@
       "panels": []
     },
     {
-      "id": 20,
+      "id": 37,
       "title": "RTT per Vehicle",
       "type": "timeseries",
       "gridPos": {
         "x": 0,
-        "y": 13,
+        "y": 45,
         "w": 12,
         "h": 6
       },
@@ -700,12 +2033,12 @@
       }
     },
     {
-      "id": 21,
+      "id": 38,
       "title": "Packet Loss per Vehicle",
       "type": "timeseries",
       "gridPos": {
         "x": 12,
-        "y": 13,
+        "y": 45,
         "w": 12,
         "h": 6
       },
@@ -752,7 +2085,6 @@
             }
           },
           "unit": "percent",
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -789,12 +2121,12 @@
       }
     },
     {
-      "id": 22,
+      "id": 39,
       "title": "Uplink Throughput",
       "type": "timeseries",
       "gridPos": {
         "x": 0,
-        "y": 19,
+        "y": 51,
         "w": 12,
         "h": 6
       },
@@ -805,7 +2137,7 @@
       "targets": [
         {
           "expr": "mining_vehicle_throughput_ul_mbps",
-          "legendFormat": "{{vehicle_id}} UL",
+          "legendFormat": "{{vehicle_id}}",
           "refId": "A"
         }
       ],
@@ -840,7 +2172,7 @@
               "mode": "off"
             }
           },
-          "unit": "Mbits"
+          "unit": "Mbps"
         },
         "overrides": []
       },
@@ -860,12 +2192,12 @@
       }
     },
     {
-      "id": 23,
+      "id": 40,
       "title": "Downlink Throughput",
       "type": "timeseries",
       "gridPos": {
         "x": 12,
-        "y": 19,
+        "y": 51,
         "w": 12,
         "h": 6
       },
@@ -876,7 +2208,7 @@
       "targets": [
         {
           "expr": "mining_vehicle_throughput_dl_mbps",
-          "legendFormat": "{{vehicle_id}} DL",
+          "legendFormat": "{{vehicle_id}}",
           "refId": "A"
         }
       ],
@@ -911,7 +2243,7 @@
               "mode": "off"
             }
           },
-          "unit": "Mbits"
+          "unit": "Mbps"
         },
         "overrides": []
       },
@@ -931,25 +2263,12 @@
       }
     },
     {
-      "id": 1300,
-      "title": "4. Vehicle Telemetry / Mining Context",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 25,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 30,
+      "id": 41,
       "title": "RSRP Signal Strength",
       "type": "timeseries",
       "gridPos": {
         "x": 0,
-        "y": 26,
+        "y": 57,
         "w": 8,
         "h": 6
       },
@@ -1032,12 +2351,12 @@
       }
     },
     {
-      "id": 31,
+      "id": 42,
       "title": "SINR Signal Quality",
       "type": "timeseries",
       "gridPos": {
         "x": 8,
-        "y": 26,
+        "y": 57,
         "w": 8,
         "h": 6
       },
@@ -1120,228 +2439,12 @@
       }
     },
     {
-      "id": 32,
-      "title": "Battery Level",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 16,
-        "y": 26,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_battery_percent",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "percent",
-          "min": 0,
-          "max": 100
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 33,
-      "title": "Vehicle Speed / Movement State",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 0,
-        "y": 32,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_speed_kmh",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "velocitykmh"
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Your current metrics show speed is 0 for all vehicles; keep this as movement state until simulator movement is fixed."
-    },
-    {
-      "id": 34,
-      "title": "Engine Temperature",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 8,
-        "y": 32,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_engine_temp_c",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "celsius"
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 35,
+      "id": 43,
       "title": "Payload Tons",
-      "type": "bargauge",
+      "type": "gauge",
       "gridPos": {
         "x": 16,
-        "y": 32,
+        "y": 57,
         "w": 8,
         "h": 6
       },
@@ -1351,8 +2454,8 @@
       },
       "targets": [
         {
-          "expr": "mining_vehicle_payload_tons",
-          "legendFormat": "{{vehicle_id}}",
+          "expr": "max by (vehicle_id) (mining_vehicle_payload_tons)",
+          "legendFormat": "Payload Tons",
           "refId": "A"
         }
       ],
@@ -1360,7 +2463,7 @@
         "defaults": {
           "custom": {},
           "min": 0,
-          "max": 200,
+          "max": 250,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1374,7 +2477,7 @@
               },
               {
                 "color": "red",
-                "value": 170
+                "value": 180
               }
             ]
           }
@@ -1389,18 +2492,18 @@
           ],
           "fields": ""
         },
-        "orientation": "horizontal",
-        "displayMode": "gradient",
-        "showUnfilled": true
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       }
     },
     {
-      "id": 1400,
-      "title": "5. MEC / Application Security Plane",
+      "id": 44,
+      "title": "6. Scenario-Controlled Simulator \u2014 Controlled Conditions",
       "type": "row",
       "gridPos": {
         "x": 0,
-        "y": 38,
+        "y": 63,
         "w": 24,
         "h": 1
       },
@@ -1408,14 +2511,14 @@
       "panels": []
     },
     {
-      "id": 40,
-      "title": "MEC Anomaly Score",
-      "type": "timeseries",
+      "id": 45,
+      "title": "Current Scenario Mode",
+      "type": "stat",
       "gridPos": {
         "x": 0,
-        "y": 39,
-        "w": 8,
-        "h": 6
+        "y": 64,
+        "w": 6,
+        "h": 4
       },
       "datasource": {
         "type": "prometheus",
@@ -1423,133 +2526,14 @@
       },
       "targets": [
         {
-          "expr": "mec_anomaly_score",
-          "legendFormat": "{{vehicle_id}}",
+          "expr": "scenario_mode_code",
+          "legendFormat": "Current Scenario Mode",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "min": 0,
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 0.3
-              },
-              {
-                "color": "red",
-                "value": 0.7
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 41,
-      "title": "Traffic Quality",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 8,
-        "y": 39,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mec_traffic_quality",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "min": 1,
-          "max": 3,
+          "custom": {},
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1563,6 +2547,154 @@
               },
               {
                 "color": "red",
+                "value": 7
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "Normal"
+                },
+                "1": {
+                  "text": "Heavy Payload"
+                },
+                "2": {
+                  "text": "Signal Degradation"
+                },
+                "3": {
+                  "text": "Network Congestion"
+                },
+                "4": {
+                  "text": "ICMP-like"
+                },
+                "5": {
+                  "text": "UDP-like"
+                },
+                "6": {
+                  "text": "TCP/SYN-like"
+                },
+                "7": {
+                  "text": "Tamper"
+                },
+                "8": {
+                  "text": "Replay"
+                }
+              }
+            }
+          ]
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 46,
+      "title": "Scenario Target UP",
+      "type": "stat",
+      "gridPos": {
+        "x": 6,
+        "y": 64,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"scenario-simulator\"}",
+          "legendFormat": "Scenario Target UP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 47,
+      "title": "Scenario Tamper/Rejection 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 64,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_telemetry_rejected_total[5m]))",
+          "legendFormat": "Scenario Tamper/Rejection 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
                 "value": 3
               }
             ]
@@ -1571,29 +2703,29 @@
         "overrides": []
       },
       "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
+        "reduceOptions": {
+          "values": false,
           "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
       }
     },
     {
-      "id": 42,
-      "title": "Predicted Attack Code",
-      "type": "timeseries",
+      "id": 48,
+      "title": "Scenario Attack Prediction",
+      "type": "stat",
       "gridPos": {
-        "x": 16,
-        "y": 39,
-        "w": 8,
-        "h": 6
+        "x": 18,
+        "y": 64,
+        "w": 6,
+        "h": 4
       },
       "datasource": {
         "type": "prometheus",
@@ -1601,44 +2733,14 @@
       },
       "targets": [
         {
-          "expr": "mec_attack_prediction",
-          "legendFormat": "{{vehicle_id}}",
+          "expr": "max(mec_attack_prediction)",
+          "legendFormat": "Scenario Attack Prediction",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "min": 0,
-          "max": 5,
+          "custom": {},
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1655,33 +2757,58 @@
                 "value": 4
               }
             ]
-          }
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "Normal"
+                },
+                "1": {
+                  "text": "ICMP"
+                },
+                "2": {
+                  "text": "TCP SYN"
+                },
+                "3": {
+                  "text": "UDP"
+                },
+                "4": {
+                  "text": "Degradation"
+                },
+                "5": {
+                  "text": "Slowloris"
+                }
+              }
+            }
+          ]
         },
         "overrides": []
       },
       "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
+        "reduceOptions": {
+          "values": false,
           "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
       }
     },
     {
-      "id": 43,
-      "title": "Attack Type Evidence 1h",
+      "id": 49,
+      "title": "Scenario RTT",
       "type": "timeseries",
       "gridPos": {
         "x": 0,
-        "y": 45,
-        "w": 12,
+        "y": 68,
+        "w": 8,
         "h": 6
       },
       "datasource": {
@@ -1690,8 +2817,8 @@
       },
       "targets": [
         {
-          "expr": "sum by (attack_type) (increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
-          "legendFormat": "{{attack_type}}",
+          "expr": "scenario_vehicle_rtt_ms",
+          "legendFormat": "{{vehicle_id}}",
           "refId": "A"
         }
       ],
@@ -1725,7 +2852,8 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          }
+          },
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -1742,17 +2870,16 @@
             "max"
           ]
         }
-      },
-      "description": "Uses 1h window so previous attack evidence does not disappear too fast."
+      }
     },
     {
-      "id": 44,
-      "title": "Tamper Detections 5m",
+      "id": 50,
+      "title": "Scenario Packet Loss",
       "type": "timeseries",
       "gridPos": {
-        "x": 12,
-        "y": 45,
-        "w": 6,
+        "x": 8,
+        "y": 68,
+        "w": 8,
         "h": 6
       },
       "datasource": {
@@ -1761,8 +2888,297 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(mec_tamper_detected_total[5m]))",
-          "legendFormat": "tamper 5m",
+          "expr": "scenario_vehicle_packet_loss_percent",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 51,
+      "title": "Scenario Throughput UL/DL",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 68,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "scenario_vehicle_throughput_ul_mbps",
+          "legendFormat": "UL {{vehicle_id}}",
+          "refId": "A"
+        },
+        {
+          "expr": "scenario_vehicle_throughput_dl_mbps",
+          "legendFormat": "DL {{vehicle_id}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "unit": "Mbps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 52,
+      "title": "Scenario RSRP",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 74,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "scenario_vehicle_rsrp_dbm",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "unit": "dBm"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 53,
+      "title": "Scenario SINR",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 74,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "scenario_vehicle_sinr_db",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "unit": "dB"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 54,
+      "title": "Scenario Payload",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 74,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "scenario_vehicle_payload_tons",
+          "legendFormat": "{{vehicle_id}}",
           "refId": "A"
         }
       ],
@@ -1816,95 +3232,25 @@
       }
     },
     {
-      "id": 45,
-      "title": "Rejected Telemetry 5m",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 18,
-        "y": 45,
-        "w": 6,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_telemetry_rejected_total[5m]))",
-          "legendFormat": "rejected 5m",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 1450,
-      "title": "5A. Achani AI Model Detection \u2014 Clear Model Output",
+      "id": 55,
+      "title": "7. MEC Security and Achani AI Model Detection",
       "type": "row",
-      "collapsed": false,
       "gridPos": {
         "x": 0,
-        "y": 51,
+        "y": 80,
         "w": 24,
         "h": 1
       },
+      "collapsed": false,
       "panels": []
     },
     {
-      "id": 1461,
+      "id": 56,
       "title": "AI Overall Attack Status",
       "type": "stat",
       "gridPos": {
         "x": 0,
-        "y": 52,
+        "y": 81,
         "w": 4,
         "h": 4
       },
@@ -1915,7 +3261,7 @@
       "targets": [
         {
           "expr": "max(mec_attack_prediction)",
-          "legendFormat": "highest risk",
+          "legendFormat": "AI Overall Attack Status",
           "refId": "A"
         }
       ],
@@ -1926,16 +3272,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "value": null,
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "value": 1,
-                "color": "orange"
+                "color": "orange",
+                "value": 1
               },
               {
-                "value": 4,
-                "color": "red"
+                "color": "red",
+                "value": 4
               }
             ]
           },
@@ -1980,16 +3326,15 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto"
-      },
-      "description": "Highest current attack code predicted by the AI/MEC model across vehicles."
+      }
     },
     {
-      "id": 1462,
+      "id": 57,
       "title": "Achani Flagged Vehicles",
       "type": "stat",
       "gridPos": {
         "x": 4,
-        "y": 52,
+        "y": 81,
         "w": 4,
         "h": 4
       },
@@ -2000,7 +3345,7 @@
       "targets": [
         {
           "expr": "sum(mec_achani_flag)",
-          "legendFormat": "flagged vehicles",
+          "legendFormat": "Achani Flagged Vehicles",
           "refId": "A"
         }
       ],
@@ -2011,16 +3356,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "value": null,
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "value": 1,
-                "color": "orange"
+                "color": "orange",
+                "value": 1
               },
               {
-                "value": 2,
-                "color": "red"
+                "color": "red",
+                "value": 2
               }
             ]
           }
@@ -2040,16 +3385,15 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto"
-      },
-      "description": "Counts vehicles currently flagged by Achani model output."
+      }
     },
     {
-      "id": 1463,
+      "id": 58,
       "title": "Bad Traffic Vehicles",
       "type": "stat",
       "gridPos": {
         "x": 8,
-        "y": 52,
+        "y": 81,
         "w": 4,
         "h": 4
       },
@@ -2060,7 +3404,7 @@
       "targets": [
         {
           "expr": "sum(mec_traffic_quality == bool 3)",
-          "legendFormat": "bad vehicles",
+          "legendFormat": "Bad Traffic Vehicles",
           "refId": "A"
         }
       ],
@@ -2071,16 +3415,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "value": null,
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "value": 1,
-                "color": "orange"
+                "color": "orange",
+                "value": 1
               },
               {
-                "value": 2,
-                "color": "red"
+                "color": "red",
+                "value": 2
               }
             ]
           }
@@ -2100,76 +3444,15 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto"
-      },
-      "description": "Counts vehicles currently classified as bad traffic quality."
+      }
     },
     {
-      "id": 1464,
-      "title": "AI Attack Detections 5m",
-      "type": "stat",
-      "gridPos": {
-        "x": 12,
-        "y": 52,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m]))",
-          "legendFormat": "detections",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 1,
-                "color": "orange"
-              },
-              {
-                "value": 3,
-                "color": "red"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Counts non-normal AI attack predictions in the last five minutes."
-    },
-    {
-      "id": 1465,
+      "id": 59,
       "title": "Current Protocol Class",
       "type": "stat",
       "gridPos": {
-        "x": 16,
-        "y": 52,
+        "x": 12,
+        "y": 81,
         "w": 4,
         "h": 4
       },
@@ -2180,7 +3463,7 @@
       "targets": [
         {
           "expr": "max(mec_protocol_prediction)",
-          "legendFormat": "protocol",
+          "legendFormat": "Current Protocol Class",
           "refId": "A"
         }
       ],
@@ -2191,16 +3474,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "value": null,
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "value": 2,
-                "color": "orange"
+                "color": "orange",
+                "value": 2
               },
               {
-                "value": 3,
-                "color": "red"
+                "color": "red",
+                "value": 3
               }
             ]
           },
@@ -2236,1386 +3519,16 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto"
-      },
-      "description": "Latest protocol behaviour classification. This is model behaviour classification, not raw packet capture."
-    },
-    {
-      "id": 1466,
-      "title": "Average Traffic Quality",
-      "type": "stat",
-      "gridPos": {
-        "x": 20,
-        "y": 52,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "avg(mec_traffic_quality)",
-          "legendFormat": "quality",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 2,
-                "color": "orange"
-              },
-              {
-                "value": 3,
-                "color": "red"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "1": {
-                  "text": "Good"
-                },
-                "2": {
-                  "text": "Normal"
-                },
-                "3": {
-                  "text": "Bad"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Average model traffic quality: 1 good, 2 normal, 3 bad."
-    },
-    {
-      "id": 1471,
-      "title": "AI Attack Type Evidence 1h",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 0,
-        "y": 56,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum by (attack_type) (increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
-          "legendFormat": "{{attack_type}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Longer evidence window so attack predictions do not disappear immediately after the demo."
-    },
-    {
-      "id": 1472,
-      "title": "AI Anomaly Score per Vehicle",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 8,
-        "y": 56,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mec_anomaly_score",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "min": 0,
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 0.5,
-                "color": "orange"
-              },
-              {
-                "value": 0.8,
-                "color": "red"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Shows how abnormal each vehicle appears to the MEC/AI detection pipeline."
-    },
-    {
-      "id": 1473,
-      "title": "Predicted Protocol Timeline",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 16,
-        "y": 56,
-        "w": 8,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mec_protocol_prediction",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "min": 1,
-          "max": 3,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 2,
-                "color": "orange"
-              },
-              {
-                "value": 3,
-                "color": "red"
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "1": {
-                  "text": "TCP"
-                },
-                "2": {
-                  "text": "UDP"
-                },
-                "3": {
-                  "text": "ICMP"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Timeline of model protocol classification: TCP=1, UDP=2, ICMP=3."
-    },
-    {
-      "id": 1480,
-      "title": "5B. AI Input Feature Evidence \u2014 Why the Model Changes",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "x": 0,
-        "y": 62,
-        "w": 24,
-        "h": 1
-      },
-      "panels": []
-    },
-    {
-      "id": 1481,
-      "title": "Input Feature: RTT per Vehicle",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 0,
-        "y": 63,
-        "w": 6,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_rtt_ms",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "ms",
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 50,
-                "color": "orange"
-              },
-              {
-                "value": 120,
-                "color": "red"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "RTT is a key input feature. ICMP/SYN/degradation-like scenarios should raise latency if the telemetry reflects the impact."
-    },
-    {
-      "id": 1482,
-      "title": "Input Feature: Packet Loss per Vehicle",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 6,
-        "y": 63,
-        "w": 6,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_packet_loss_percent",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "percent",
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "green"
-              },
-              {
-                "value": 5,
-                "color": "orange"
-              },
-              {
-                "value": 10,
-                "color": "red"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Packet loss is a key input feature. UDP/degradation-like scenarios should increase packet loss."
-    },
-    {
-      "id": 1483,
-      "title": "Input Feature: Uplink Throughput",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 12,
-        "y": 63,
-        "w": 6,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_throughput_ul_mbps",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "Mbps",
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Uplink throughput is used to explain traffic degradation."
-    },
-    {
-      "id": 1484,
-      "title": "Input Feature: Downlink Throughput",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 18,
-        "y": 63,
-        "w": 6,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_throughput_dl_mbps",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "Mbps",
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Downlink throughput is used to explain traffic degradation."
-    },
-    {
-      "id": 1485,
-      "title": "Input Feature: RSRP Signal Strength",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 0,
-        "y": 69,
-        "w": 12,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_rsrp_dbm",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "dBm",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "red"
-              },
-              {
-                "value": -105,
-                "color": "orange"
-              },
-              {
-                "value": -90,
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "RSRP helps explain signal degradation/jamming-like scenarios."
-    },
-    {
-      "id": 1486,
-      "title": "Input Feature: SINR Signal Quality",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 12,
-        "y": 69,
-        "w": 12,
-        "h": 6
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_sinr_db",
-          "legendFormat": "{{vehicle_id}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 14,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "dB",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "value": null,
-                "color": "red"
-              },
-              {
-                "value": 0,
-                "color": "orange"
-              },
-              {
-                "value": 15,
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "SINR helps explain signal quality degradation."
-    },
-    {
-      "id": 1500,
-      "title": "6. Management & Monitoring Plane",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 75,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 50,
-      "title": "Prometheus UP",
-      "type": "stat",
-      "gridPos": {
-        "x": 0,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"prometheus\"}",
-          "legendFormat": "Prometheus",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
       }
-    },
-    {
-      "id": 51,
-      "title": "Node Exporter UP",
-      "type": "stat",
-      "gridPos": {
-        "x": 4,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"node-exporter\"}",
-          "legendFormat": "Node Exporter",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 52,
-      "title": "MEC Edge UP",
-      "type": "stat",
-      "gridPos": {
-        "x": 8,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"mec-edge\"}",
-          "legendFormat": "MEC",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 53,
-      "title": "Telemetry Exporter UP",
-      "type": "stat",
-      "gridPos": {
-        "x": 12,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"mining-telemetry\"}",
-          "legendFormat": "Telemetry",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 54,
-      "title": "CPU Usage",
-      "type": "stat",
-      "gridPos": {
-        "x": 16,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[30s])) * 100)",
-          "legendFormat": "CPU",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "percent",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 55,
-      "title": "Memory Usage",
-      "type": "stat",
-      "gridPos": {
-        "x": 20,
-        "y": 76,
-        "w": 4,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
-          "legendFormat": "Mem",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "percent",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 1600,
-      "title": "7. Internal Kali Attack Evidence \u2014 hping3 / HTTP Burst",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 80,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
     },
     {
       "id": 60,
-      "title": "Host Network RX",
-      "type": "timeseries",
+      "title": "AI Detections 5m",
+      "type": "stat",
       "gridPos": {
-        "x": 0,
+        "x": 16,
         "y": 81,
-        "w": 12,
-        "h": 7
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(rate(node_network_receive_bytes_total{device!=\"lo\"}[30s]))",
-          "legendFormat": "RX",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "Bps"
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      },
-      "description": "Should spike during hping3 SYN/UDP flood or HTTP burst from kali-attacker."
-    },
-    {
-      "id": 61,
-      "title": "Host Network TX",
-      "type": "timeseries",
-      "gridPos": {
-        "x": 12,
-        "y": 81,
-        "w": 12,
-        "h": 7
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(rate(node_network_transmit_bytes_total{device!=\"lo\"}[30s]))",
-          "legendFormat": "TX",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 2,
-            "fillOpacity": 12,
-            "gradientMode": "none",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "unit": "Bps"
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ]
-        }
-      }
-    },
-    {
-      "id": 62,
-      "title": "TCP SYN Pressure Target: MEC",
-      "type": "stat",
-      "gridPos": {
-        "x": 0,
-        "y": 88,
-        "w": 6,
+        "w": 4,
         "h": 4
       },
       "datasource": {
@@ -3624,120 +3537,8 @@
       },
       "targets": [
         {
-          "expr": "up{job=\"mec-edge\"}",
-          "legendFormat": "MEC still up",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Run: timeout 15s docker exec kali-attacker hping3 -S --flood -p 5000 10.0.0.45"
-    },
-    {
-      "id": 63,
-      "title": "UPF User Plane Test Target",
-      "type": "stat",
-      "gridPos": {
-        "x": 6,
-        "y": 88,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"open5gs-upf\"}",
-          "legendFormat": "UPF still up",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": ""
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto"
-      },
-      "description": "Run: timeout 10s docker exec kali-attacker hping3 --udp --flood -p 2152 10.0.0.22"
-    },
-    {
-      "id": 64,
-      "title": "Attack Predictions Evidence 1h",
-      "type": "stat",
-      "gridPos": {
-        "x": 12,
-        "y": 88,
-        "w": 6,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
-          "legendFormat": "attack predictions",
+          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[5m]))",
+          "legendFormat": "AI Detections 5m",
           "refId": "A"
         }
       ],
@@ -3780,12 +3581,331 @@
       }
     },
     {
-      "id": 65,
-      "title": "Rejected Telemetry Evidence 1h",
+      "id": 61,
+      "title": "Avg Traffic Quality",
       "type": "stat",
       "gridPos": {
-        "x": 18,
-        "y": 88,
+        "x": 20,
+        "y": 81,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(mec_traffic_quality)",
+          "legendFormat": "Avg Traffic Quality",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": {
+                  "text": "Good"
+                },
+                "2": {
+                  "text": "Normal"
+                },
+                "3": {
+                  "text": "Bad"
+                }
+              }
+            }
+          ]
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 62,
+      "title": "AI Attack Type Evidence 1h",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 85,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (attack_type) (increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
+          "legendFormat": "{{attack_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 63,
+      "title": "AI Anomaly Score per Vehicle",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 85,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "mec_anomaly_score",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 0.8
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 64,
+      "title": "Predicted Protocol Timeline",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 85,
+        "w": 8,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "mec_protocol_prediction",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 2,
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "min": 1,
+          "max": 3
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "id": 65,
+      "title": "8. Threat / MITRE-Style Evidence",
+      "type": "row",
+      "gridPos": {
+        "x": 0,
+        "y": 91,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 66,
+      "title": "Active Telemetry Tampering \u2014 5m",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 92,
         "w": 6,
         "h": 4
       },
@@ -3795,8 +3915,176 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(mec_telemetry_rejected_total[1h]))",
-          "legendFormat": "rejected 1h",
+          "expr": "sum(increase(mec_tamper_detected_total[5m])) > bool 0",
+          "legendFormat": "Active Telemetry Tampering \u2014 5m",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "description": "Recent tamper only; avoids staying red forever."
+    },
+    {
+      "id": 67,
+      "title": "Telemetry Availability / DoS Indicator",
+      "type": "stat",
+      "gridPos": {
+        "x": 6,
+        "y": 92,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "max(1 - up{job=\"mining-telemetry\"})",
+          "legendFormat": "Telemetry Availability / DoS Indicator",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "description": "Indicates exporter down. Pair with Kali logs/PCAP before calling it DoS."
+    },
+    {
+      "id": 68,
+      "title": "Degradation Indicator",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 92,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "(max(mining_vehicle_packet_loss_percent) > bool 10) or (max(mining_vehicle_rtt_ms) > bool 200) or (min(mining_vehicle_rsrp_dbm) < bool -110) or (min(mining_vehicle_sinr_db) < bool 5)",
+          "legendFormat": "Degradation Indicator",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "description": "Jamming/degradation-style indicator based on telemetry symptoms."
+    },
+    {
+      "id": 69,
+      "title": "Active Alert Count",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 92,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "count(ALERTS{alertstate=\"firing\"}) OR vector(0)",
+          "legendFormat": "Active Alert Count",
           "refId": "A"
         }
       ],
@@ -3816,7 +4104,7 @@
               },
               {
                 "color": "red",
-                "value": 5
+                "value": 3
               }
             ]
           }
@@ -3839,358 +4127,29 @@
       }
     },
     {
-      "id": 8000,
-      "title": "8. Deepika MITRE/ICS Evidence \u2014 Added Unique Panels",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 93,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 8001,
-      "title": "Availability SLO \u2014 Telemetry Exporter",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 94,
-        "w": 6,
-        "h": 4
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "SLO Breached",
-                  "color": "red"
-                },
-                "1": {
-                  "text": "SLO Healthy",
-                  "color": "green"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "textMode": "auto",
-        "wideLayout": true,
-        "showPercentChange": false
-      },
-      "targets": [
-        {
-          "expr": "avg(up{job=\"mining-telemetry\"}) > bool 0.95",
-          "legendFormat": "",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Added from Deepika: simple service availability SLO for telemetry pipeline."
-    },
-    {
-      "id": 8002,
-      "title": "DoS Indicator (T0814) \u2014 Telemetry Down",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "gridPos": {
-        "x": 6,
-        "y": 94,
-        "w": 6,
-        "h": 4
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "Normal",
-                  "color": "green"
-                },
-                "1": {
-                  "text": "Attack / Alert",
-                  "color": "red"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "textMode": "auto",
-        "wideLayout": true,
-        "showPercentChange": false
-      },
-      "targets": [
-        {
-          "expr": "max(1 - up{job=\"mining-telemetry\"})",
-          "legendFormat": "",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "MITRE-style DoS indicator based on telemetry exporter availability."
-    },
-    {
-      "id": 8003,
-      "title": "Telemetry Tampering (T0832)",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 94,
-        "w": 6,
-        "h": 4
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "Normal",
-                  "color": "green"
-                },
-                "1": {
-                  "text": "Attack / Alert",
-                  "color": "red"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "textMode": "auto",
-        "wideLayout": true,
-        "showPercentChange": false
-      },
-      "targets": [
-        {
-          "expr": "scalar(max(mec_tamper_detected_total)) > bool 0",
-          "legendFormat": "",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Flags once MEC tamper detection has observed tampered telemetry."
-    },
-    {
-      "id": 8004,
-      "title": "Jamming / Degradation Indicator",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "gridPos": {
-        "x": 18,
-        "y": 94,
-        "w": 6,
-        "h": 4
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "Normal",
-                  "color": "green"
-                },
-                "1": {
-                  "text": "Attack / Alert",
-                  "color": "red"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "textMode": "auto",
-        "wideLayout": true,
-        "showPercentChange": false
-      },
-      "targets": [
-        {
-          "expr": "(max(mining_vehicle_packet_loss_percent) > bool 10) or (max(mining_vehicle_rtt_ms) > bool 200) or (min(mining_vehicle_rsrp_dbm) < bool -110) or (min(mining_vehicle_sinr_db) < bool 5)",
-          "legendFormat": "",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Composite indicator for jamming/degradation-style symptoms using packet loss, RTT, RSRP and SINR."
-    },
-    {
-      "id": 8005,
+      "id": 70,
       "title": "Vehicle Threat Score",
       "type": "gauge",
+      "gridPos": {
+        "x": 0,
+        "y": 96,
+        "w": 8,
+        "h": 6
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "gridPos": {
-        "x": 0,
-        "y": 98,
-        "w": 8,
-        "h": 7
-      },
+      "targets": [
+        {
+          "expr": "clamp_max(clamp_max(max(mining_vehicle_packet_loss_percent) * 5, 40) + clamp_max((max(mining_vehicle_rtt_ms) - 20) / 4, 30) + clamp_max(sum(increase(mec_tamper_detected_total[5m])) * 10, 30),100)",
+          "legendFormat": "Vehicle Threat Score",
+          "refId": "A"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
+          "custom": {},
           "min": 0,
           "max": 100,
           "thresholds": {
@@ -4201,92 +4160,67 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 33
+                "color": "orange",
+                "value": 60
               },
               {
                 "color": "red",
-                "value": 66
+                "value": 85
               }
             ]
-          },
-          "mappings": [],
-          "color": {
-            "mode": "thresholds"
           }
         },
         "overrides": []
       },
       "options": {
         "reduceOptions": {
+          "values": false,
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
-          "values": false
+          "fields": ""
         },
         "orientation": "auto",
         "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showThresholdMarkers": true
       },
-      "targets": [
-        {
-          "expr": "clamp_max((clamp_max(max(mining_vehicle_packet_loss_percent) * 5, 40)) + (clamp_max((max(mining_vehicle_rtt_ms) - 20) / 4, 30)) + (clamp_max(max(mec_tamper_detected_total) * 10, 30)), 100)",
-          "legendFormat": "Threat Score",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Added from Deepika but corrected: composite score from packet loss, RTT and tamper activity."
+      "description": "Composite score using recent packet loss, RTT and recent tamper events."
     },
     {
-      "id": 8006,
+      "id": 71,
       "title": "Packet Loss Heatmap \u2014 Attack Patterns",
       "type": "heatmap",
+      "gridPos": {
+        "x": 8,
+        "y": 96,
+        "w": 8,
+        "h": 6
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "Unique visual from Deepika: heatmap view for packet loss patterns.",
-      "gridPos": {
-        "x": 8,
-        "y": 98,
-        "w": 8,
-        "h": 7
-      },
+      "targets": [
+        {
+          "expr": "mining_vehicle_packet_loss_percent",
+          "legendFormat": "{{vehicle_id}}",
+          "refId": "A"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "scaleDistribution": {
-              "type": "linear"
-            }
-          },
-          "mappings": []
+          "custom": {}
         },
         "overrides": []
       },
       "options": {
-        "calculate": true,
+        "calculate": false,
         "cellGap": 1,
+        "cellValues": {},
         "color": {
           "mode": "scheme",
-          "scheme": "RdYlGn",
-          "steps": 64,
-          "reverse": false,
-          "exponent": 0.5,
-          "fill": "dark-orange",
-          "scale": "exponential"
+          "scheme": "Spectral",
+          "steps": 64
         },
         "exemplars": {
           "color": "rgba(255,0,255,0.7)"
@@ -4301,134 +4235,36 @@
           "layout": "auto"
         },
         "tooltip": {
-          "mode": "single",
-          "showColorScale": false,
+          "show": true,
           "yHistogram": false
         },
         "yAxis": {
           "axisPlacement": "left",
-          "axisLabel": "Packet Loss (%)",
           "reverse": false
         }
-      },
-      "targets": [
-        {
-          "expr": "mining_vehicle_packet_loss_percent",
-          "legendFormat": "{{ vehicle_id }}",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ]
+      }
     },
     {
-      "id": 8007,
-      "title": "Active Alert Count",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "id": 72,
+      "title": "Alert Rule Details",
+      "type": "timeseries",
       "gridPos": {
         "x": 16,
-        "y": 98,
-        "w": 8,
-        "h": 7
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "No Active Alerts",
-                  "color": "green"
-                }
-              }
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "textMode": "auto",
-        "wideLayout": true,
-        "showPercentChange": false
-      },
-      "targets": [
-        {
-          "expr": "count(ALERTS{alertstate=\"firing\"}) OR vector(0)",
-          "legendFormat": "",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Shows current firing Prometheus alerts if alert rules are loaded."
-    },
-    {
-      "id": 8100,
-      "title": "9. Deepika Network Traffic Evidence \u2014 TCP / UDP / ICMP Symptoms",
-      "type": "row",
-      "gridPos": {
-        "x": 0,
-        "y": 105,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 8101,
-      "title": "ICMP / Packet Spike Evidence",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 106,
+        "y": 96,
         "w": 8,
         "h": 6
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "ALERTS",
+          "legendFormat": "{{alertname}} {{alertstate}}",
+          "refId": "A"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -4436,11 +4272,10 @@
             "lineInterpolation": "linear",
             "barAlignment": 0,
             "lineWidth": 2,
-            "fillOpacity": 10,
+            "fillOpacity": 12,
             "gradientMode": "none",
             "spanNulls": false,
-            "insertNulls": false,
-            "showPoints": "auto",
+            "showPoints": "never",
             "pointSize": 5,
             "stacking": {
               "mode": "none",
@@ -4449,8 +4284,6 @@
             "axisPlacement": "auto",
             "axisLabel": "",
             "axisColorMode": "text",
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -4462,23 +4295,6 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          },
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
           }
         },
         "overrides": []
@@ -4491,39 +4307,52 @@
         "legend": {
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true,
-          "calcs": []
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
         }
-      },
-      "targets": [
-        {
-          "expr": "sum(rate(node_network_receive_packets_total{device!=\"lo\"}[1m]))",
-          "legendFormat": "RX packets/sec",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "General packet-rate spike panel useful during ICMP/hping tests."
+      }
     },
     {
-      "id": 8102,
-      "title": "UDP Traffic Volume",
+      "id": 73,
+      "title": "9. Kali Network Attack Evidence",
+      "type": "row",
+      "gridPos": {
+        "x": 0,
+        "y": 102,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 74,
+      "title": "Host Network RX/TX",
       "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 103,
+        "w": 12,
+        "h": 6
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "gridPos": {
-        "x": 8,
-        "y": 106,
-        "w": 8,
-        "h": 6
-      },
+      "targets": [
+        {
+          "expr": "sum(rate(node_network_receive_bytes_total{device!=\"lo\"}[30s]))",
+          "legendFormat": "RX bytes/s",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(node_network_transmit_bytes_total{device!=\"lo\"}[30s]))",
+          "legendFormat": "TX bytes/s",
+          "refId": "B"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -4531,11 +4360,10 @@
             "lineInterpolation": "linear",
             "barAlignment": 0,
             "lineWidth": 2,
-            "fillOpacity": 10,
+            "fillOpacity": 12,
             "gradientMode": "none",
             "spanNulls": false,
-            "insertNulls": false,
-            "showPoints": "auto",
+            "showPoints": "never",
             "pointSize": 5,
             "stacking": {
               "mode": "none",
@@ -4544,8 +4372,6 @@
             "axisPlacement": "auto",
             "axisLabel": "",
             "axisColorMode": "text",
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -4557,23 +4383,6 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          },
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
           },
           "unit": "Bps"
         },
@@ -4587,39 +4396,44 @@
         "legend": {
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true,
-          "calcs": []
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
         }
-      },
-      "targets": [
-        {
-          "expr": "sum(rate(node_network_receive_bytes_total{device!=\"lo\"}[1m]))",
-          "legendFormat": "RX bytes/sec",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "Use during UDP/GTP-U-facing tests; interpreted as volume evidence, not protocol-perfect classification."
+      }
     },
     {
-      "id": 8103,
-      "title": "TCP Activity",
+      "id": 75,
+      "title": "Protocol Activity \u2014 TCP / UDP / ICMP",
       "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 103,
+        "w": 12,
+        "h": 6
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "gridPos": {
-        "x": 16,
-        "y": 106,
-        "w": 8,
-        "h": 6
-      },
+      "targets": [
+        {
+          "expr": "sum(rate(node_netstat_Tcp_InSegs[1m]))",
+          "legendFormat": "TCP InSegs/s",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(node_netstat_Udp_InDatagrams[1m]))",
+          "legendFormat": "UDP InDatagrams/s",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(node_netstat_Icmp_InMsgs[1m]))",
+          "legendFormat": "ICMP InMsgs/s",
+          "refId": "C"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -4627,11 +4441,10 @@
             "lineInterpolation": "linear",
             "barAlignment": 0,
             "lineWidth": 2,
-            "fillOpacity": 10,
+            "fillOpacity": 12,
             "gradientMode": "none",
             "spanNulls": false,
-            "insertNulls": false,
-            "showPoints": "auto",
+            "showPoints": "never",
             "pointSize": 5,
             "stacking": {
               "mode": "none",
@@ -4640,8 +4453,6 @@
             "axisPlacement": "auto",
             "axisLabel": "",
             "axisColorMode": "text",
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -4653,23 +4464,6 @@
             "thresholdsStyle": {
               "mode": "off"
             }
-          },
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
           }
         },
         "overrides": []
@@ -4682,64 +4476,249 @@
         "legend": {
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true,
-          "calcs": []
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
         }
       },
-      "targets": [
-        {
-          "expr": "sum(rate(node_netstat_Tcp_InSegs[1m]))",
-          "legendFormat": "TCP InSegs/sec",
-          "refId": "A",
-          "range": true,
-          "instant": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "description": "TCP segment activity; useful during SYN/HTTP pressure tests."
+      "description": "Use only if node_exporter exposes these protocol metrics. Otherwise treat host RX/TX as main network proof."
     },
     {
-      "id": 8200,
-      "title": "10. Deepika MITRE/ICS Notes",
-      "type": "row",
+      "id": 76,
+      "title": "MEC Target During TCP Test",
+      "type": "stat",
       "gridPos": {
         "x": 0,
-        "y": 112,
-        "w": 24,
-        "h": 1
+        "y": 109,
+        "w": 6,
+        "h": 4
       },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 8201,
-      "title": "How to Explain Deepika Additions",
-      "type": "text",
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "gridPos": {
-        "x": 0,
-        "y": 113,
-        "w": 24,
-        "h": 6
+      "targets": [
+        {
+          "expr": "up{job=\"mec-edge\"}",
+          "legendFormat": "MEC Target During TCP Test",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
       },
       "options": {
-        "mode": "markdown",
-        "content": "\n### What was added from Deepika only where it added new value\n- **Availability SLO**: proves the telemetry pipeline is healthy or breached.\n- **MITRE-style indicators**: DoS (T0814), Telemetry Tampering (T0832), and Jamming/Degradation indicators.\n- **Vehicle Threat Score**: composite risk score combining RTT, packet loss, and tamper activity.\n- **Packet Loss Heatmap**: clearer visual pattern view for degradation/attack periods.\n- **Active Alert Count**: shows Prometheus alert firing state.\n- **TCP/UDP/ICMP network evidence panels**: show traffic symptoms during Kali tests.\n\nDuplicated panels such as generic RTT, packet loss, traffic quality, protocol prediction, attack type, and anomaly score were not copied again because Achani/v4 already contains cleaner versions.\n"
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
       }
     },
     {
-      "id": 8300,
-      "title": "11. Demo Command Notes",
+      "id": 77,
+      "title": "UPF Target During UDP/2152 Test",
+      "type": "stat",
+      "gridPos": {
+        "x": 6,
+        "y": 109,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"open5gs-upf\"}",
+          "legendFormat": "UPF Target During UDP/2152 Test",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 78,
+      "title": "Attack Predictions Evidence 1h",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 109,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_attack_predictions_total{attack_type!=\"normal\"}[1h]))",
+          "legendFormat": "Attack Predictions Evidence 1h",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 79,
+      "title": "Rejected Telemetry Evidence 1h",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 109,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(mec_telemetry_rejected_total[1h]))",
+          "legendFormat": "Rejected Telemetry Evidence 1h",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 80,
+      "title": "10. Loki Forensic Evidence / Query Notes",
       "type": "row",
       "gridPos": {
         "x": 0,
-        "y": 119,
+        "y": 113,
         "w": 24,
         "h": 1
       },
@@ -4747,19 +4726,46 @@
       "panels": []
     },
     {
-      "id": 8301,
+      "id": 81,
+      "title": "Grafana Explore Queries for Forensic Proof",
+      "type": "text",
+      "gridPos": {
+        "x": 0,
+        "y": 114,
+        "w": 24,
+        "h": 8
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "Use **Grafana \u2192 Explore \u2192 Loki** for forensic proof.\n\nRecommended queries:\n\n```logql\n{job=\"mec-edge\"} |= \"TAMPER\"\n{job=\"mec-edge\"} |= \"TAMPER\" |= \"MV-001\"\n{job=\"mqtt-bridge\"} |= \"telemetry_tamper\"\n{job=\"mqtt-bridge\"} |= \"400\"\n{job=\"docker-containers\"} |= \"TAMPER\"\n```\n\nMetrics show counts. Loki shows searchable event evidence: which vehicle, what payload/path, and what was rejected.\n"
+      }
+    },
+    {
+      "id": 82,
+      "title": "11. Demo Commands",
+      "type": "row",
+      "gridPos": {
+        "x": 0,
+        "y": 122,
+        "w": 24,
+        "h": 1
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 83,
       "title": "Run These During Demo",
       "type": "text",
       "gridPos": {
         "x": 0,
-        "y": 120,
+        "y": 123,
         "w": 24,
-        "h": 7
+        "h": 10
       },
-      "datasource": null,
       "options": {
         "mode": "markdown",
-        "content": "### Controlled lab-only demo commands\n\n**MEC SYN pressure:**  \n`timeout 15s docker exec kali-attacker hping3 -S --flood -p 5000 10.0.0.45`\n\n**UPF-facing UDP/GTP-U test:**  \n`timeout 10s docker exec kali-attacker hping3 --udp --flood -p 2152 10.0.0.22`\n\n**Telemetry injection detection:**  \nPOST invalid `speed_kmh: 999` to `http://10.0.0.45:5000/telemetry`\n\n**Evidence:**  \n`curl http://localhost:5001/metrics | grep -E \"tamper|rejected|attack|anomaly\"`  \n`curl http://localhost:5001/events`\n\n\n**AI model sample trigger:**  \n`./attacks/send_ai_attack_samples.sh`  \nUse this when Kali hping traffic creates network spikes but the AI model panels stay normal. The AI model changes only when model input features such as RTT, packet loss, throughput, RSRP, or SINR change.\n"
+        "content": "**MQTT valid telemetry**\n\n```bash\ndocker exec kali-attacker mosquitto_pub -h mosquitto -u mininguser -P miningpass123 \\\n  -t \"mining/vehicles/MV-001/telemetry\" \\\n  -m '{\"vehicle_id\":\"MV-001\",\"speed_kmh\":25,\"fuel_liters\":900,\"battery_percent\":82,\"engine_temp_c\":85,\"rsrp_dbm\":-70,\"rtt_ms\":20,\"packet_loss_percent\":0.5,\"payload_tons\":70,\"sinr_db\":24,\"ul_mbps\":18,\"dl_mbps\":80}'\n```\n\n**MQTT tamper telemetry**\n\n```bash\ndocker exec kali-attacker mosquitto_pub -h mosquitto -u mininguser -P miningpass123 \\\n  -t \"mining/vehicles/MV-001/telemetry\" \\\n  -m '{\"vehicle_id\":\"MV-001\",\"speed_kmh\":999,\"fuel_liters\":2400,\"battery_percent\":82,\"engine_temp_c\":85,\"rsrp_dbm\":-70,\"rtt_ms\":20,\"packet_loss_percent\":0.5,\"payload_tons\":250,\"sinr_db\":24,\"ul_mbps\":18,\"dl_mbps\":80}'\n```\n\n**Kali TCP/UDP proof**\n\n```bash\ntimeout 10s docker exec kali-attacker hping3 -S --flood -p 5000 10.0.0.45\ntimeout 10s docker exec kali-attacker hping3 --udp --flood -p 2152 10.0.0.22\n```\n"
       }
     }
   ],

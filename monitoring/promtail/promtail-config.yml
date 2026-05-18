@@ -1,5 +1,6 @@
 server:
   http_listen_port: 9080
+  grpc_listen_port: 0
 
 positions:
   filename: /tmp/positions.yaml
@@ -8,20 +9,10 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-  - job_name: docker-mec-edge
+  - job_name: docker-containers
     static_configs:
       - targets:
           - localhost
         labels:
-          job: mec-edge
-          container: mec-edge
-          __path__: /var/lib/docker/containers/75515a580ecb30270f61141c8eea5dc56ea3dfe6f4a3d761997fa585db3fdee2/*-json.log
-
-  - job_name: docker-mqtt-bridge
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: mqtt-bridge
-          container: mqtt-bridge
-          __path__: /var/lib/docker/containers/ad05fb4df7afc0c2a4376f8c893720eccef86db1dafa21f71b7e94310a3beca5/*-json.log
+          job: docker-containers
+          __path__: /var/lib/docker/containers/*/*-json.log
