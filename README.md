@@ -28,7 +28,7 @@ The objective is to build a repeatable 5G/MEC cybersecurity testbed that can:
 | Name | Student ID | Main Role |
 |---|---:|---|
 | Hirdya Sharma | 21749180 | Infrastructure integration, telemetry pipeline, MEC Edge API, scenario testing, internal Kali testing, evidence workflow |
-| Deepika Sharma | 21952195 | Grafana dashboards, Prometheus observability, threat/MITRE-style visualisation |
+| Deepika Sharma | 21952195 | Grafana dashboards, Prometheus observability, threat/MITRE-style visualisation, MQTT implementation |
 | Achani Bandara | 21741102 | ML model training, model artifacts, AI output metrics |
 | Hitesh Pankhania | 22471264 | Attack execution and packet capture |
 | Gurleen Kaur | 22131597 | Attack simulation and Wireshark analysis |
